@@ -5,13 +5,15 @@
   "license": "MIT",
   "scripts": {
     "test": "jest --passWithNoTests",
-    "build": "tsc"
+    "build": "tsc",
+    "start": "ts-node src/index.ts"
   },
   "dependencies": {
-    "@app/config": "*"
+    "@app/config": "*",
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
-    "@app/tsconfig": "*",
-    "@app/jest-config": "*"
+    "@app/jest-config": "*",
+    "@app/tsconfig": "*"
   }
 }

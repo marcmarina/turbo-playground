@@ -54,9 +54,6 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
-
 # Secrets
 secrets.json
 secrets
@@ -71,10 +68,6 @@ scripts/apollo/schema
 # Build Artefacts
 dist
 schema
-
-# dotenv environment variables file
-.env
-/test.env
 
 schema-export
 
