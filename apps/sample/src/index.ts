@@ -1,7 +1,13 @@
-import "dotenv/config";
+import path from "path";
+
+import dotenv from "dotenv";
 
 import { string } from "@app/config";
 
-string("FOO");
+dotenv.config({
+  path: path.join(__dirname, "../.env"),
+});
 
-console.log("Hello world!");
+const greeting = string("GREETING");
+
+console.log(greeting);
