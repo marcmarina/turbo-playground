@@ -1,0 +1,19 @@
+{
+  "name": "@app/config",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest --passWithNoTests"
+  },
+  "types": "dist/index.d.ts",
+  "dependencies": {},
+  "devDependencies": {
+    "@app/jest-config": "*",
+    "@app/tsconfig": "*"
+  },
+  "keywords": []
+}
