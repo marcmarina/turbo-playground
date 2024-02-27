@@ -10,7 +10,6 @@
     "test": "jest --passWithNoTests"
   },
   "types": "dist/index.d.ts",
-  "dependencies": {},
   "devDependencies": {
     "@app/jest-config": "*",
     "@app/tsconfig": "*"
