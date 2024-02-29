@@ -4,16 +4,19 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**"],
-      "cache": true
+      "cache": true,
+      "outputMode": "new-only"
     },
     "test": {
       "dependsOn": ["^test"],
-      "cache": true
+      "cache": true,
+      "outputMode": "new-only"
     },
     "start": {
       "dependsOn": ["build"],
       "outputs": [],
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
     "verify": {
       "dependsOn": ["build", "test"],
