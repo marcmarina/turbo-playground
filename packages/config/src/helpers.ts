@@ -1,5 +1,3 @@
-import assert from "assert/strict";
-
 import {
   InvalidEnumError,
   InvalidIntegerError,
@@ -15,12 +13,13 @@ import {
  * @returns value
  */
 export const string = (variableName: string): string => {
-  if (variableName in process.env) {
-    assert(typeof process.env[variableName] === "string");
-    return process.env[variableName] as string;
-  } else {
+  const value = process.env[variableName];
+
+  if (!value) {
     throw new MissingEnvironmentVariableError(variableName);
   }
+
+  return value;
 };
 
 /**
