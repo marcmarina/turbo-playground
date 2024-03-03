@@ -7,7 +7,7 @@ app.get("/favicon.ico", (req, res) => {
 });
 
 app.get("/_health", (req, res) => {
-  res.send(`OK - ${new Date().toISOString()}`);
+  res.send(`OK`);
 });
 
 app.get("/", (req, res) => {
