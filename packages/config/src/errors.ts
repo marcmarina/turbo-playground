@@ -20,7 +20,7 @@ export class InvalidEnumError extends ConfigurationError {
 
   constructor(variableName: string, allowedValues: string[], value: string) {
     super(
-      `Environment variable ${variableName}=${value} is not one of the allowed values: ${allowedValues.join(', ')}`
+      `Environment variable ${variableName}=${value} is not one of the allowed values: ${allowedValues.join(', ')}`,
     );
     this.variableName = variableName;
     this.allowedValues = allowedValues;
@@ -33,7 +33,9 @@ export class InvalidIntegerError extends ConfigurationError {
   value: string;
 
   constructor(variableName: string, value: string) {
-    super(`Environment variable ${variableName} is not a valid integer: ${value}`);
+    super(
+      `Environment variable ${variableName} is not a valid integer: ${value}`,
+    );
     this.variableName = variableName;
     this.value = value;
   }

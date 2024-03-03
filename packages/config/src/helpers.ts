@@ -2,7 +2,7 @@ import {
   InvalidEnumError,
   InvalidIntegerError,
   MissingEnvironmentVariableError,
-} from "./errors";
+} from './errors';
 
 /**
  * Get a string environment variable.
@@ -32,7 +32,7 @@ export const string = (variableName: string): string => {
  */
 export const oneOf = <T extends string>(
   variableName: string,
-  allowedValues: T[]
+  allowedValues: T[],
 ): T => {
   const value = string(variableName) as T;
 
@@ -72,12 +72,12 @@ export const integer = (variableName: string): number => {
  * @returns value
  */
 export const boolean = (variableName: string): boolean => {
-  const value = oneOf(variableName, ["true", "false"]);
+  const value = oneOf(variableName, ['true', 'false']);
 
   switch (value) {
-    case "true":
+    case 'true':
       return true;
-    case "false":
+    case 'false':
       return false;
     default:
       assertNever(value);
