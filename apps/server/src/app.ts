@@ -14,4 +14,8 @@ app.get('/', (req, res) => {
   res.send(process.env);
 });
 
+app.use((req, res) => {
+  res.status(404).send(`Cannot ${req.method} ${req.url}`);
+});
+
 export default app;
