@@ -20,5 +20,3 @@ jobs:
       run: yarn test
     - name: Copy build dependencies
       run: ./copy-build-deps.sh
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag marcmarina/turbo-playground
