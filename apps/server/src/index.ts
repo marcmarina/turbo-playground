@@ -27,7 +27,7 @@ server.listen(port, () => {
 });
 
 const shutdownHandler = (signal: any) => {
-  console.table(`${signal} received. Closing server.`);
+  console.log(`${signal} received. Closing server.`);
 
   server.close(() => {
     process.exit(0);

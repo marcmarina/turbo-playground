@@ -2,6 +2,8 @@ import express from 'express';
 
 const app = express();
 
+app.use(express.json());
+
 app.get('/favicon.ico', (req, res) => {
   return res.status(204).send();
 });
