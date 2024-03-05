@@ -2014,6 +2014,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"express@workspace:apps/express":
+  version: 0.0.0-use.local
+  resolution: "express@workspace:apps/express"
+  dependencies:
+    "@app/config": "npm:*"
+    "@app/jest-config": "npm:*"
+    "@app/tsconfig": "npm:*"
+    "@types/express": "npm:^4.17.21"
+    dotenv: "npm:^16.4.5"
+    express: "npm:^4.18.3"
+    nodemon: "npm:^3.1.0"
+  languageName: unknown
+  linkType: soft
+
 "fast-json-stable-stringify@npm:2.x, fast-json-stable-stringify@npm:^2.1.0":
   version: 2.1.0
   resolution: "fast-json-stable-stringify@npm:2.1.0"
@@ -4007,20 +4021,6 @@ __metadata:
   checksum: 10c0/fa9f0e21a540a28f301258dfe1e57bb4f81cd460d28f0e973860477dd4acef946a1f41748b5bd41c73b621bea2029569c935faa38578fd34cd42a9b4947088ba
   languageName: node
   linkType: hard
-
-"server@workspace:apps/server":
-  version: 0.0.0-use.local
-  resolution: "server@workspace:apps/server"
-  dependencies:
-    "@app/config": "npm:*"
-    "@app/jest-config": "npm:*"
-    "@app/tsconfig": "npm:*"
-    "@types/express": "npm:^4.17.21"
-    dotenv: "npm:^16.4.5"
-    express: "npm:^4.18.3"
-    nodemon: "npm:^3.1.0"
-  languageName: unknown
-  linkType: soft
 
 "set-function-length@npm:^1.2.1":
   version: 1.2.1
