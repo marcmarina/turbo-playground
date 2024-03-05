@@ -1,4 +1,5 @@
 import express from 'express';
+import packageJson from '../package.json';
 
 const app = express();
 
@@ -13,7 +14,7 @@ app.get('/_health', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  res.send(process.env);
+  res.send(packageJson);
 });
 
 app.use((req, res) => {
