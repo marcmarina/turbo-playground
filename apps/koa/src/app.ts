@@ -11,4 +11,8 @@ router.get('/', (ctx) => {
 
 app.use(router.routes());
 
+app.use(async (ctx) => {
+  ctx.body = `Cannot ${ctx.method} ${ctx.path}`;
+});
+
 export default app;
