@@ -27,7 +27,7 @@ router.get('/', (ctx) => {
 app.use(router.routes());
 
 app.use(async (ctx) => {
-  ctx.status = 400;
+  ctx.status = 404;
   ctx.body = `Cannot ${ctx.method} ${ctx.path}`;
 });
 
