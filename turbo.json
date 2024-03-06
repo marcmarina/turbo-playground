@@ -3,11 +3,13 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
+      "inputs": ["src/**"],
       "outputs": ["dist/**"],
       "cache": true,
       "outputMode": "new-only"
     },
     "test": {
+      "inputs": ["src/**"],
       "dependsOn": ["^test"],
       "cache": true,
       "outputMode": "new-only"
