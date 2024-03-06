@@ -1,9 +1,5 @@
-import dotenv from 'dotenv';
-import path from 'path';
-
-import { integer } from '@app/config';
-
 import app from './app';
+import * as config from './config';
 
 process.on('uncaughtException', (err) => {
   console.log('Uncaught exception:', err);
@@ -11,16 +7,8 @@ process.on('uncaughtException', (err) => {
   process.exit(1);
 });
 
-const envFilePath = path.join(__dirname, '../.env');
-
-dotenv.config({
-  path: envFilePath,
-});
-
-const port = integer('PORT');
-
-const server = app.listen(port, () => {
-  console.log(`[${process.pid}] Server listening on port ${port}`);
+const server = app.listen(config.port, () => {
+  console.log(`[${process.pid}] Server listening on port ${config.port}`);
 });
 
 const shutdownHandler = (signal: any) => {

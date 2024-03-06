@@ -3406,10 +3406,12 @@ __metadata:
     "@types/express": "npm:^4.17.21"
     "@types/koa": "npm:^2.15.0"
     "@types/koa-router": "npm:^7.4.8"
+    "@types/morgan": "npm:^1.9.9"
     dotenv: "npm:^16.4.5"
     express: "npm:^4.18.3"
     koa: "npm:^2.15.0"
     koa-router: "npm:^12.0.1"
+    morgan: "npm:^1.10.0"
     nodemon: "npm:^3.1.0"
   languageName: unknown
   linkType: soft
