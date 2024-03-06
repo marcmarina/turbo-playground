@@ -15,8 +15,6 @@ jobs:
       with:
         node-version-file: '.node-version'
     - name: Install dependencies
-      run: yarn install
+      run: yarn install --immutable
     - name: Test
       run: yarn test
-    - name: Copy build dependencies
-      run: ./copy-build-deps.sh
