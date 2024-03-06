@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-import http from 'http';
 import path from 'path';
 
 import { integer } from '@app/config';
@@ -20,9 +19,7 @@ dotenv.config({
 
 const port = integer('PORT');
 
-const server = http.createServer(app.callback());
-
-server.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`[${process.pid}] Server listening on port ${port}`);
 });
 
