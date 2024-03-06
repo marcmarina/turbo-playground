@@ -6,11 +6,19 @@ import * as config from './config';
 
 const app = new Koa();
 
-const router = new Router();
+const healthRouter = new Router();
+
+healthRouter.get('/_health', (ctx) => {
+  ctx.body = 'OK';
+});
+
+app.use(healthRouter.routes());
 
 app.use((ctx, next) => {
   morgan(config.morganFormat)(ctx.req, ctx.res, next);
 });
+
+const router = new Router();
 
 router.get('/', (ctx) => {
   ctx.body = 'Hello, world!';
