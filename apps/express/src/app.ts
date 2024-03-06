@@ -7,8 +7,6 @@ const app = express();
 
 app.use(express.json());
 
-app.use(morgan(morganFormat));
-
 app.get('/favicon.ico', (req, res) => {
   return res.status(204).send();
 });
@@ -16,6 +14,8 @@ app.get('/favicon.ico', (req, res) => {
 app.get('/_health', (req, res) => {
   res.send(`OK`);
 });
+
+app.use(morgan(morganFormat));
 
 app.get('/', (req, res) => {
   res.send(packageJson);
