@@ -1,4 +1,4 @@
-name: Run unit tests
+name: QA
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -18,5 +18,14 @@ jobs:
       run: yarn install
     - name: Test
       run: yarn test
-    - name: Copy build dependencies
-      run: ./copy-build-deps.sh
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v4
+      with:
+        node-version-file: '.node-version'
+    - name: Install dependencies
+      run: yarn install
+    - name: Build
+      run: yarn build
