@@ -1,10 +1,14 @@
 {
-  "private": true,
   "name": "turborepo-playground",
   "version": "0.0.1",
+  "private": true,
   "description": "",
   "license": "UNLICENSED",
   "main": "index.js",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "build": "turbo run build",
     "prepare": "husky install",
@@ -13,10 +17,6 @@
     "turbo": "turbo",
     "verify": "turbo run verify"
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "resolutions": {
     "graphql": "^16.8.1"
   },
@@ -33,8 +33,8 @@
     "prettier-package-json": "^2.6.4",
     "ts-jest": "^29.1.2"
   },
+  "packageManager": "yarn@4.1.1",
   "engines": {
     "node": "20.x"
-  },
-  "packageManager": "yarn@4.1.1"
+  }
 }
