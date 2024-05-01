@@ -1,0 +1,23 @@
+{
+  "name": "@app/logger",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest --passWithNoTests"
+  },
+  "types": "dist/index.d.ts",
+  "devDependencies": {
+    "@app/jest-config": "*",
+    "@app/tsconfig": "*"
+  },
+  "dependencies": {
+    "@app/config": "*",
+    "pino": "^9.0.0",
+    "pino-pretty": "^11.0.0"
+  },
+  "keywords": []
+}
