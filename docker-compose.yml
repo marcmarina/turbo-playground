@@ -1,0 +1,12 @@
+name: turbo-playground
+
+services:
+  express-app:
+    build: .
+    command: node apps/express-app
+    environment:
+      PORT: 8080
+    env_file:
+      - apps/express-app/.env
+    ports:
+      - '8080:8080'
