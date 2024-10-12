@@ -3,16 +3,25 @@ import Router from 'koa-router';
 import morgan from 'morgan';
 
 import * as config from './config';
+import { context } from './context';
 
 const app = new Koa();
 
-const healthRouter = new Router();
-
-healthRouter.get('/_health', (ctx) => {
-  ctx.body = 'OK';
+app.use((ctx, next) => {
+  context.run(new Map(), next);
 });
 
-app.use(healthRouter.routes());
+app.use((ctx, next) => {
+  const requestId = ctx.get('x-request-id') || crypto.randomUUID();
+
+  ctx.set('x-request-id', requestId);
+
+  const store = context.getStore();
+
+  store?.set('requestId', requestId);
+
+  next();
+});
 
 app.use((ctx, next) => {
   morgan(config.morganFormat)(ctx.req, ctx.res, next);
@@ -20,13 +29,13 @@ app.use((ctx, next) => {
 
 const router = new Router();
 
-router.get('/', (ctx) => {
-  ctx.body = 'Hello, world!';
-});
-
 app.use(router.routes());
 
-app.use(async (ctx) => {
+router.get('/_health', (ctx) => {
+  ctx.body = 'OK';
+});
+
+app.use((ctx) => {
   ctx.status = 404;
   ctx.body = `Cannot ${ctx.method} ${ctx.path}`;
 });
