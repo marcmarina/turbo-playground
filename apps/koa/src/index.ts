@@ -1,3 +1,12 @@
+import dotenv from 'dotenv';
+import path from 'path';
+
+const envFilePath = path.join(__dirname, '../.env');
+
+dotenv.config({
+  path: envFilePath,
+});
+
 import app from './app';
 import * as config from './config';
 
