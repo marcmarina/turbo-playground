@@ -11,11 +11,11 @@
   "dependencies": {
     "@app/config": "*",
     "@app/context": "*",
+    "@app/logger": "*",
     "dotenv": "^16.4.5",
     "express": "^4.18.3",
     "koa": "^2.15.0",
-    "koa-router": "^12.0.1",
-    "morgan": "^1.10.0"
+    "koa-router": "^12.0.1"
   },
   "devDependencies": {
     "@app/jest-config": "*",
@@ -23,7 +23,6 @@
     "@types/express": "^4.17.21",
     "@types/koa": "^2.15.0",
     "@types/koa-router": "^7.4.8",
-    "@types/morgan": "^1.9.9",
     "nodemon": "^3.1.0"
   }
 }

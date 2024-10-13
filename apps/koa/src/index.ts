@@ -9,6 +9,7 @@ dotenv.config({
 
 import app from './app';
 import * as config from './config';
+import { logger } from '@app/logger';
 
 process.on('uncaughtException', (err) => {
   console.log('Uncaught exception:', err);
@@ -17,11 +18,11 @@ process.on('uncaughtException', (err) => {
 });
 
 const server = app.listen(config.port, () => {
-  console.log(`[${process.pid}] Server listening on port ${config.port}`);
+  logger.info(`Server listening on port ${config.port}`);
 });
 
 const shutdownHandler = (signal: any) => {
-  console.log(`${signal} received. Closing server.`);
+  logger.info(`${signal} received. Closing server.`);
 
   server.close(() => {
     process.exit(0);

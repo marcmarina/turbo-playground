@@ -47,6 +47,7 @@ __metadata:
     "@app/jest-config": "npm:*"
     "@app/tsconfig": "npm:*"
     pino: "npm:^9.0.0"
+    pino-http: "npm:^10.3.0"
     pino-pretty: "npm:^11.0.0"
   languageName: unknown
   linkType: soft
@@ -2220,6 +2221,7 @@ __metadata:
   resolution: "express-app@workspace:apps/express-app"
   dependencies:
     "@app/config": "npm:*"
+    "@app/context": "npm:*"
     "@app/jest-config": "npm:*"
     "@app/logger": "npm:*"
     "@app/tsconfig": "npm:*"
@@ -3573,16 +3575,15 @@ __metadata:
     "@app/config": "npm:*"
     "@app/context": "npm:*"
     "@app/jest-config": "npm:*"
+    "@app/logger": "npm:*"
     "@app/tsconfig": "npm:*"
     "@types/express": "npm:^4.17.21"
     "@types/koa": "npm:^2.15.0"
     "@types/koa-router": "npm:^7.4.8"
-    "@types/morgan": "npm:^1.9.9"
     dotenv: "npm:^16.4.5"
     express: "npm:^4.18.3"
     koa: "npm:^2.15.0"
     koa-router: "npm:^12.0.1"
-    morgan: "npm:^1.10.0"
     nodemon: "npm:^3.1.0"
   languageName: unknown
   linkType: soft
@@ -4266,6 +4267,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pino-http@npm:^10.3.0":
+  version: 10.3.0
+  resolution: "pino-http@npm:10.3.0"
+  dependencies:
+    get-caller-file: "npm:^2.0.5"
+    pino: "npm:^9.0.0"
+    pino-std-serializers: "npm:^7.0.0"
+    process-warning: "npm:^4.0.0"
+  checksum: 10c0/da95d93e1176c02201f9b9bb0af53ad737105c5772acbb077dcad0f52ebce2438e0e9fc8216cd96396d1305d0ecf1f1d23142c7a50110a701ea093b2ee999ea7
+  languageName: node
+  linkType: hard
+
 "pino-pretty@npm:^11.0.0":
   version: 11.0.0
   resolution: "pino-pretty@npm:11.0.0"
@@ -4294,6 +4307,13 @@ __metadata:
   version: 6.2.2
   resolution: "pino-std-serializers@npm:6.2.2"
   checksum: 10c0/8f1c7f0f0d8f91e6c6b5b2a6bfb48f06441abeb85f1c2288319f736f9c6d814fbeebe928d2314efc2ba6018fa7db9357a105eca9fc99fc1f28945a8a8b28d3d5
+  languageName: node
+  linkType: hard
+
+"pino-std-serializers@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "pino-std-serializers@npm:7.0.0"
+  checksum: 10c0/73e694d542e8de94445a03a98396cf383306de41fd75ecc07085d57ed7a57896198508a0dec6eefad8d701044af21eb27253ccc352586a03cf0d4a0bd25b4133
   languageName: node
   linkType: hard
 
@@ -4384,6 +4404,13 @@ __metadata:
   version: 3.0.0
   resolution: "process-warning@npm:3.0.0"
   checksum: 10c0/60f3c8ddee586f0706c1e6cb5aa9c86df05774b9330d792d7c8851cf0031afd759d665404d07037e0b4901b55c44a423f07bdc465c63de07d8d23196bb403622
+  languageName: node
+  linkType: hard
+
+"process-warning@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "process-warning@npm:4.0.0"
+  checksum: 10c0/5312a72b69d37a1b82ad03f3dfa0090dab3804a8fd995d06c28e3c002852bd82f5584217d9f4a3f197892bb2afc22d57e2c662c7e906b5abb48c0380c7b0880d
   languageName: node
   linkType: hard
 

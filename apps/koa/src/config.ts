@@ -1,11 +1,3 @@
-import { integer, oneOf } from '@app/config';
-
-export const morganFormat = oneOf('MORGAN_FORMAT', [
-  'combined',
-  'common',
-  'dev',
-  'short',
-  'tiny',
-]);
+import { integer } from '@app/config';
 
 export const port = integer('PORT');

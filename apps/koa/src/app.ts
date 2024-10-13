@@ -1,17 +1,25 @@
 import Koa from 'koa';
 import Router from 'koa-router';
-import morgan from 'morgan';
 
-import * as config from './config';
 import { getStore, httpContextWrapper } from '@app/context';
+import { httpLogger } from '@app/logger';
 
 const app = new Koa();
 
-app.use((ctx, next) => {
-  httpContextWrapper(next);
+app.use(async (ctx, next) => {
+  try {
+    await next();
+  } catch (err) {
+    ctx.status = 500;
+    ctx.body = err.message;
+  }
 });
 
-app.use((ctx, next) => {
+app.use(async (ctx, next) => {
+  await httpContextWrapper(next);
+});
+
+app.use(async (ctx, next) => {
   const requestId = ctx.get('x-request-id') || crypto.randomUUID();
 
   ctx.set('x-request-id', requestId);
@@ -20,18 +28,20 @@ app.use((ctx, next) => {
 
   store?.set('requestId', requestId);
 
-  next();
+  await next();
 });
 
-app.use((ctx, next) => {
-  morgan(config.morganFormat)(ctx.req, ctx.res, next);
+app.use(async (ctx, next) => {
+  httpLogger(ctx.req, ctx.res);
+
+  await next();
 });
 
 const router = new Router();
 
 app.use(router.routes());
 
-router.get('/_health', (ctx) => {
+router.get('/_health', async (ctx) => {
   ctx.body = 'OK';
 });
 
