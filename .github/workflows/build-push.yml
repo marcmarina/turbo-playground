@@ -1,4 +1,4 @@
-name: Build, push and deploy
+name: Build image and push to Docker Hub
 
 on:
   push:
@@ -23,5 +23,3 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: marcmarina/turbo-playground:latest
-    - name: Deploy to production
-      run: curl -X GET https://api.render.com/deploy/srv-cni8l10l6cac7396r6u0\?key\=_n-KMmF4m5Q
