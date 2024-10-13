@@ -24,6 +24,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@app/context@npm:*, @app/context@workspace:packages/context":
+  version: 0.0.0-use.local
+  resolution: "@app/context@workspace:packages/context"
+  dependencies:
+    "@app/jest-config": "npm:*"
+    "@app/tsconfig": "npm:*"
+  languageName: unknown
+  linkType: soft
+
 "@app/jest-config@npm:*, @app/jest-config@workspace:packages/jest-config":
   version: 0.0.0-use.local
   resolution: "@app/jest-config@workspace:packages/jest-config"
@@ -3562,6 +3571,7 @@ __metadata:
   resolution: "koa@workspace:apps/koa"
   dependencies:
     "@app/config": "npm:*"
+    "@app/context": "npm:*"
     "@app/jest-config": "npm:*"
     "@app/tsconfig": "npm:*"
     "@types/express": "npm:^4.17.21"

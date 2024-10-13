@@ -3,12 +3,12 @@ import Router from 'koa-router';
 import morgan from 'morgan';
 
 import * as config from './config';
-import { context } from './context';
+import { getStore, httpContextWrapper } from '@app/context';
 
 const app = new Koa();
 
 app.use((ctx, next) => {
-  context.run(new Map(), next);
+  httpContextWrapper(next);
 });
 
 app.use((ctx, next) => {
@@ -16,7 +16,7 @@ app.use((ctx, next) => {
 
   ctx.set('x-request-id', requestId);
 
-  const store = context.getStore();
+  const store = getStore();
 
   store?.set('requestId', requestId);
 
