@@ -17,15 +17,18 @@ export const logger = pino({
 
 export const httpLogger = pinoHttp({
   logger,
-  genReqId: (req) => {
-    const requestIdHeader = req.headers['x-request-id'];
+  genReqId: (req, res) => {
+    const requestIdHeader =
+      req.headers['x-request-id'] || res.getHeader('x-request-id');
 
     if (requestIdHeader) return requestIdHeader;
 
     return crypto.randomUUID();
   },
-  customLogLevel: (req, res) => {
-    if (res.statusCode >= 400) {
+  customLogLevel: (req, res, err) => {
+    if (400 <= res.statusCode && res.statusCode < 500) {
+      return 'warn';
+    } else if (500 <= res.statusCode) {
       return 'error';
     }
 
