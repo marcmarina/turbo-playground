@@ -9,7 +9,7 @@ const app = new Koa();
 const healthRouter = new Router();
 
 healthRouter.get('/_health', (ctx) => {
-  ctx.body = 'OK';
+  ctx.body = 'OK!';
 });
 
 app.use(healthRouter.routes());
