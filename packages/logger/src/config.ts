@@ -1,4 +1,4 @@
-import { oneOf } from '@app/config';
+import { boolean, oneOf } from '@app/config';
 
 export const logger = {
   level: oneOf('LOG_LEVEL', [
@@ -10,4 +10,7 @@ export const logger = {
     'trace',
   ]),
   format: oneOf('LOG_FORMAT', ['json', 'pretty']),
+  requestLogging: {
+    enabled: boolean('ENABLE_REQUEST_LOGGING'),
+  },
 };

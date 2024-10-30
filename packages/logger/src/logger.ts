@@ -17,6 +17,7 @@ export const logger = pino({
 
 export const httpLogger = pinoHttp({
   logger,
+  autoLogging: config.logger.requestLogging.enabled,
   genReqId: (req, res) => {
     const requestIdHeader =
       req.headers['x-request-id'] || res.getHeader('x-request-id');
