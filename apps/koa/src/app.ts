@@ -1,53 +1,56 @@
+import http from 'http';
 import Koa from 'koa';
 import Router from 'koa-router';
 
 import { getStore, httpContextWrapper } from '@app/context';
 import { httpLogger } from '@app/logger';
 
-const app = new Koa();
+export function createServer() {
+  const app = new Koa();
 
-app.use(async (ctx, next) => {
-  try {
+  app.use(async (ctx, next) => {
+    try {
+      await next();
+    } catch (err) {
+      ctx.status = 500;
+      ctx.body = err.message;
+    }
+  });
+
+  app.use(async (ctx, next) => {
+    await httpContextWrapper(next);
+  });
+
+  app.use(async (ctx, next) => {
+    const requestId = ctx.get('x-request-id') || crypto.randomUUID();
+
+    ctx.set('x-request-id', requestId);
+
+    const store = getStore();
+
+    store?.set('requestId', requestId);
+
     await next();
-  } catch (err) {
-    ctx.status = 500;
-    ctx.body = err.message;
-  }
-});
+  });
 
-app.use(async (ctx, next) => {
-  await httpContextWrapper(next);
-});
+  app.use(async (ctx, next) => {
+    httpLogger(ctx.req, ctx.res);
 
-app.use(async (ctx, next) => {
-  const requestId = ctx.get('x-request-id') || crypto.randomUUID();
+    await next();
+  });
 
-  ctx.set('x-request-id', requestId);
+  const router = new Router();
 
-  const store = getStore();
+  app.use(router.routes());
 
-  store?.set('requestId', requestId);
+  router.get('/_health', async (ctx) => {
+    ctx.body = 'OK';
+  });
 
-  await next();
-});
+  app.use((ctx) => {
+    ctx.status = 404;
+    ctx.body = `Cannot ${ctx.method} ${ctx.path}`;
+  });
 
-app.use(async (ctx, next) => {
-  httpLogger(ctx.req, ctx.res);
-
-  await next();
-});
-
-const router = new Router();
-
-app.use(router.routes());
-
-router.get('/_health', async (ctx) => {
-  ctx.body = 'OK';
-});
-
-app.use((ctx) => {
-  ctx.status = 404;
-  ctx.body = `Cannot ${ctx.method} ${ctx.path}`;
-});
-
-export default app;
+  return http.createServer(app.callback());
+}

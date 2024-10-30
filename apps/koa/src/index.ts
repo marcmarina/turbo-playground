@@ -7,9 +7,9 @@ dotenv.config({
   path: envFilePath,
 });
 
-import app from './app';
 import * as config from './config';
 import { logger } from '@app/logger';
+import { createServer } from './app';
 
 process.on('uncaughtException', (err) => {
   console.log('Uncaught exception:', err);
@@ -17,7 +17,9 @@ process.on('uncaughtException', (err) => {
   process.exit(1);
 });
 
-const server = app.listen(config.port, () => {
+const server = createServer();
+
+server.listen(config.port, () => {
   logger.info(`Server listening on port ${config.port}`);
 });
 
