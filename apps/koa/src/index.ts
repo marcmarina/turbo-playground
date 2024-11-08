@@ -9,7 +9,7 @@ dotenv.config({
 
 import * as config from './config';
 import { logger } from '@app/logger';
-import { createServer } from './app';
+import { createServer } from './server';
 
 process.on('uncaughtException', (err) => {
   console.log('Uncaught exception:', err);
