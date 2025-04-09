@@ -1,8 +1,15 @@
-import dotenv from 'dotenv';
 import path from 'path';
 
-const envFilePath = path.resolve(__dirname, '..', '.env');
-dotenv.config({ path: envFilePath });
+import dotenvx from '@dotenvx/dotenvx';
+
+const envFilePath = path.resolve(
+  __dirname,
+  '..',
+  `.env.${process.env.NODE_ENV ?? 'dev'}`,
+);
+dotenvx.config({
+  path: envFilePath,
+});
 
 import http from 'http';
 import { createHttpTerminator } from 'http-terminator';
