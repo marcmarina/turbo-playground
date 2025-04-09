@@ -2,11 +2,8 @@ import path from 'path';
 
 import dotenvx from '@dotenvx/dotenvx';
 
-const envFilePath = path.resolve(
-  __dirname,
-  '..',
-  `.env.${process.env.NODE_ENV ?? 'dev'}`,
-);
+const envFilePath = path.resolve(__dirname, '..', `.env`);
+
 dotenvx.config({
   path: envFilePath,
 });
