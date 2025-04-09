@@ -23,7 +23,7 @@
   "dependencies": {
     "@dotenvx/dotenvx": "^1.39.1",
     "ts-node": "^10.9.2",
-    "turbo": "^2.3.3",
+    "turbo": "^2.5.0",
     "typescript": "^5.3.3"
   },
   "devDependencies": {
