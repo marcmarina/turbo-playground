@@ -6,6 +6,7 @@ const envFilePath = path.resolve(__dirname, '..', `.env`);
 
 dotenvx.config({
   path: envFilePath,
+  strict: true,
 });
 
 import http from 'http';
