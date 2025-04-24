@@ -3,6 +3,8 @@ import packageJson from '../package.json';
 import { getStore, httpContextWrapper } from '@app/context';
 import { httpLogger } from '@app/logger';
 
+import os from 'os';
+
 const app = express();
 
 app.use(express.json());
@@ -34,8 +36,33 @@ app.get('/_health', (req, res, next) => {
   res.send(`OK`);
 });
 
-app.get('/', (req, res) => {
-  res.send(packageJson);
+app.use('/', (req, res) => {
+  res.send(`
+    <html>
+    <head>
+      <title>Express App</title>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+          color: #333;
+          padding: 1rem;
+        }
+      </style>
+    </head>
+    <body>
+    <p>Version: ${packageJson.version}</p>
+    <p>Node.js Version: ${process.version}</p>
+    <p>Hostname: ${os.hostname()}</p>
+    <p>Request ID: ${req.get('x-request-id')}</p>
+    <p>Request Method: ${req.method}</p>
+    <p>Request URL: ${req.url}</p>
+    <p>Request Headers: ${JSON.stringify(req.headers, null, 2)}</p>
+    <p>Request Body: ${JSON.stringify(req.body, null, 2)}</p>
+    <p>Request Query: ${JSON.stringify(req.query, null, 2)}</p>
+    </body>
+    </html>
+`)
 });
 
 app.use((req, res) => {
