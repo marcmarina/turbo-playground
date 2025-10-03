@@ -12,6 +12,7 @@ services:
       - "8080:8080"
     networks:
       - shared
+    restart: unless-stopped
 
 networks:
   shared:
