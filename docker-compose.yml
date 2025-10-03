@@ -10,3 +10,9 @@ services:
       - apps/express-app/.env
     ports:
       - "8080:8080"
+    networks:
+      - shared
+
+networks:
+  shared:
+    external: true
