@@ -10,11 +10,3 @@ services:
       - apps/express-app/.env
     ports:
       - "8080:8080"
-  db:
-    image: postgres:16.2
-    environment:
-      POSTGRES_DB: turbo
-      POSTGRES_USER: turbo-user
-      POSTGRES_PASSWORD: turbo-password
-    ports:
-      - "5432:5432"

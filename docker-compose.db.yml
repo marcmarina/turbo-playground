@@ -1,0 +1,11 @@
+name: databases
+
+services:
+  db:
+    image: postgres:16.2
+    environment:
+      POSTGRES_DB: database
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
