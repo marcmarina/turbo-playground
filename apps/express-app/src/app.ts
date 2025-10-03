@@ -55,6 +55,18 @@ app.get('/', (req, res) => {
   res.send(packageJson);
 });
 
+app.get('/users/:id', async (req, res, next) => {
+  try {
+    const { rows } = await pool.query('SELECT * FROM users WHERE id = $1', [
+      req.params.id,
+    ]);
+
+    res.status(200).json(rows[0]);
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.get('/users', async (req, res, next) => {
   try {
     const { rows } = await pool.query('SELECT * FROM users');
