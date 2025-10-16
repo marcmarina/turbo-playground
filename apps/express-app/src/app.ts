@@ -5,7 +5,6 @@ import { getStore, httpContextWrapper } from '@app/context';
 import { httpLogger } from '@app/logger';
 
 import packageJson from '../package.json';
-import { pool } from './database';
 
 const app = express() as express.Express;
 
@@ -53,28 +52,6 @@ app.get('/_health', (req, res, next) => {
 
 app.get('/', (req, res) => {
   res.send(packageJson);
-});
-
-app.get('/users/:id', async (req, res, next) => {
-  try {
-    const { rows } = await pool.query('SELECT * FROM users WHERE id = $1', [
-      req.params.id,
-    ]);
-
-    res.status(200).json(rows[0]);
-  } catch (error) {
-    next(error);
-  }
-});
-
-app.get('/users', async (req, res, next) => {
-  try {
-    const { rows } = await pool.query('SELECT * FROM users');
-
-    res.status(200).json(rows);
-  } catch (error) {
-    next(error);
-  }
 });
 
 app.use((req, res) => {
