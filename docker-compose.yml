@@ -1,8 +1,6 @@
-name: turbo-playground
-
 services:
   express-app:
-    build: .
+    image: turbo-playground:latest
     command: node apps/express-app
     environment:
       PORT: 8080
@@ -10,10 +8,5 @@ services:
       - apps/express-app/.env
     ports:
       - "8080:8080"
-    networks:
-      - shared
-    restart: unless-stopped
-
-networks:
-  shared:
-    external: true
+    deploy:
+      replicas: 2
