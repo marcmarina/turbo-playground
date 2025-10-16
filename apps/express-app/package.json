@@ -12,6 +12,7 @@
     "@app/config": "*",
     "@app/context": "*",
     "@app/logger": "*",
+    "axios": "^1.12.2",
     "dotenv": "^16.4.5",
     "express": "^4.18.3",
     "http-terminator": "^3.2.0",

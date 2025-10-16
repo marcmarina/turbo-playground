@@ -1,3 +1,4 @@
+import os from 'os';
 import express from 'express';
 import promBundle from 'express-prom-bundle';
 
@@ -5,6 +6,7 @@ import { getStore, httpContextWrapper } from '@app/context';
 import { httpLogger } from '@app/logger';
 
 import packageJson from '../package.json';
+import { httpClient } from './http-client';
 
 const app = express() as express.Express;
 
@@ -44,6 +46,20 @@ app.use(httpLogger);
 
 app.get('/favicon.ico', (req, res) => {
   return res.status(204).send();
+});
+
+app.get('/get-pod-host', async (req, res, next) => {
+  try {
+    const response = await httpClient.get('/host');
+
+    res.send(response.data);
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.get('/host', (req, res) => {
+  res.send(`Host: ${os.hostname()}`);
 });
 
 app.get('/_health', (req, res, next) => {
