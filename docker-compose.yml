@@ -1,21 +1,19 @@
 services:
   # External-facing service with published port
   express-app:
-    image: turbo-playground:latest
+    image: marcmarina/turbo-playground:latest
     command: node apps/express-app
     networks:
-      - shared-network
+      - traefik
     env_file:
       - apps/express-app/.env
-    ports:
-      - "8080:8080"
     deploy:
-      replicas: 1
+      replicas: 3
       update_config:
         delay: 5s
         parallelism: 1
         order: start-first
 
 networks:
-  shared-network:
+  traefik:
     external: true
