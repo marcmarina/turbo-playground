@@ -35,7 +35,7 @@ const terminator = createHttpTerminator({
   gracefulTerminationTimeout: 10000,
 });
 
-const shutdownHandler = async (signal: any) => {
+const shutdownHandler = async (signal: NodeJS.Signals) => {
   logger.info(`Received ${signal}. Shutting down server.`);
 
   await terminator.terminate();
