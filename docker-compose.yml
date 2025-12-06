@@ -1,5 +1,4 @@
 services:
-  # External-facing service with published port
   express-app:
     image: marcmarina/turbo-playground:latest
     command: node apps/express-app
@@ -8,11 +7,16 @@ services:
     env_file:
       - apps/express-app/.env
     deploy:
-      replicas: 3
       update_config:
         delay: 5s
         parallelism: 1
         order: start-first
+      labels:
+        - "traefik.swarm.network=traefik"
+        - "traefik.enable=true"
+        - "traefik.http.routers.turbo.rule=Host(`turbo.backend.marcmarina.com`)"
+        - "traefik.http.routers.turbo.entrypoints=web"
+        - "traefik.http.services.turbo.loadbalancer.server.port=8081"
 
 networks:
   traefik:
