@@ -18,6 +18,23 @@ services:
         - "traefik.http.routers.turbo.entrypoints=web"
         - "traefik.http.services.turbo.loadbalancer.server.port=8081"
 
+  front-end:
+    image: marcmarina/turbo-playground:latest
+    command: yarn dev
+    networks:
+      - traefik
+    deploy:
+      update_config:
+        delay: 5s
+        parallelism: 1
+        order: start-first
+      labels:
+        - "traefik.swarm.network=traefik"
+        - "traefik.enable=true"
+        - "traefik.http.routers.front-end.rule=Host(`front-end.frontend.marcmarina.com`)"
+        - "traefik.http.routers.front-end.entrypoints=web"
+        - "traefik.http.services.front-end.loadbalancer.server.port=5173"
+
 networks:
   traefik:
     external: true
