@@ -4,9 +4,7 @@ import './App.css';
 import { useWebSocket } from './use-web-socket';
 
 function App() {
-  const { isConnected, messages, sendMessage } = useWebSocket(
-    'ws://localhost:8080',
-  );
+  const { messages } = useWebSocket('ws://localhost:8080');
 
   return (
     <>
