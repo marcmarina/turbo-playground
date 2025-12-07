@@ -1,6 +1,6 @@
 services:
   express-app:
-    image: marcmarina/turbo-playground:latest
+    image: harbor.marcmarina.com/library/turbo-playground:latest
     command: node apps/express-app
     networks:
       - traefik
@@ -19,7 +19,7 @@ services:
         - "traefik.http.services.turbo.loadbalancer.server.port=8081"
 
   front-end:
-    image: marcmarina/turbo-playground:latest
+    image: harbor.marcmarina.com/library/turbo-playground:latest
     command: yarn workspace front-end serve
     networks:
       - traefik
