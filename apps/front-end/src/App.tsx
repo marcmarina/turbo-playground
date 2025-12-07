@@ -1,10 +1,12 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import reactLogo from './assets/react.svg';
+import viteLogo from '/vite.svg';
+import './App.css';
+import { useWebSocket } from './use-web-socket';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { isConnected, messages, sendMessage } = useWebSocket(
+    'ws://localhost:8080',
+  );
 
   return (
     <>
@@ -17,19 +19,13 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      <div>
+        {messages.map((m, i) => {
+          return <div key={i}>{JSON.stringify(m)}</div>;
+        })}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

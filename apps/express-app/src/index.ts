@@ -11,6 +11,7 @@ import { logger } from '@app/logger';
 
 import app from './app';
 import * as config from './config';
+import { webSocketManager } from './web-socket-manager';
 
 process.on('uncaughtException', (err) => {
   logger.error(err, 'Uncaught exception. Exiting process.');
@@ -25,6 +26,7 @@ process.on('unhandledRejection', async (cause) => {
 });
 
 const server = http.createServer(app);
+webSocketManager.initialize(server);
 
 server.listen(config.port, () => {
   logger.info(`Server listening on port ${config.port}`);

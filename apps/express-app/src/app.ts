@@ -7,6 +7,7 @@ import { httpLogger } from '@app/logger';
 
 import packageJson from '../package.json';
 import { httpClient } from './http-client';
+import { webSocketManager } from './web-socket-manager';
 
 const app = express() as express.Express;
 
@@ -64,6 +65,14 @@ app.get('/host', (req, res) => {
 
 app.get('/_health', (req, res, next) => {
   res.send(`OK`);
+});
+
+app.post('/message', (req, res, next) => {
+  webSocketManager.broadcast(req.body);
+
+  res.send({
+    success: true,
+  });
 });
 
 app.use('/', (req, res) => {
