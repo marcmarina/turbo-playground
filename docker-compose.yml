@@ -14,9 +14,9 @@ services:
       labels:
         - "traefik.swarm.network=traefik"
         - "traefik.enable=true"
-        - "traefik.http.routers.turbo.rule=Host(`turbo.backend.marcmarina.com`)"
-        - "traefik.http.routers.turbo.entrypoints=web"
-        - "traefik.http.services.turbo.loadbalancer.server.port=8081"
+        - "traefik.http.routers.turbo-backend.rule=Host(`turbo.backend.marcmarina.com`)"
+        - "traefik.http.routers.turbo-backend.entrypoints=web"
+        - "traefik.http.services.turbo-backend.loadbalancer.server.port=8081"
 
   front-end:
     image: harbor.marcmarina.com/library/turbo-playground:latest
@@ -31,9 +31,9 @@ services:
       labels:
         - "traefik.swarm.network=traefik"
         - "traefik.enable=true"
-        - "traefik.http.routers.front-end.rule=Host(`front-end.frontend.marcmarina.com`)"
-        - "traefik.http.routers.front-end.entrypoints=web"
-        - "traefik.http.services.front-end.loadbalancer.server.port=3000"
+        - "traefik.http.routers.turbo-frontend.rule=Host(`turbo.frontend.marcmarina.com`)"
+        - "traefik.http.routers.turbo-frontend.entrypoints=web"
+        - "traefik.http.services.turbo-frontend.loadbalancer.server.port=3000"
 
 networks:
   traefik:
