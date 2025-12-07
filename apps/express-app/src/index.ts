@@ -9,7 +9,7 @@ import { createHttpTerminator } from 'http-terminator';
 
 import { logger } from '@app/logger';
 
-import app from './app';
+import { createServer } from './server';
 import * as config from './config';
 import { webSocketManager } from './web-socket-manager';
 
@@ -25,7 +25,8 @@ process.on('unhandledRejection', async (cause) => {
   process.exit(1);
 });
 
-const server = http.createServer(app);
+const server = createServer();
+
 webSocketManager.initialize(server);
 
 server.listen(config.port, () => {

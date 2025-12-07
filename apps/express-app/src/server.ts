@@ -1,6 +1,7 @@
 import os from 'os';
 import express from 'express';
 import promBundle from 'express-prom-bundle';
+import http from 'http'
 
 import { getStore, httpContextWrapper } from '@app/context';
 import { httpLogger } from '@app/logger';
@@ -8,6 +9,8 @@ import { httpLogger } from '@app/logger';
 import packageJson from '../package.json';
 import { httpClient } from './http-client';
 import { webSocketManager } from './web-socket-manager';
+
+export function createServer() {
 
 const app = express() as express.Express;
 
@@ -112,4 +115,6 @@ app.use((error, req, res, next) => {
   res.status(500).send(error.message);
 });
 
-export default app;
+return http.createServer(app)
+
+}
