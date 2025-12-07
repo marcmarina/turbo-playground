@@ -20,7 +20,7 @@ services:
 
   front-end:
     image: marcmarina/turbo-playground:latest
-    command: yarn dev
+    command: yarn workspace front-end serve
     networks:
       - traefik
     deploy:
@@ -33,7 +33,7 @@ services:
         - "traefik.enable=true"
         - "traefik.http.routers.front-end.rule=Host(`front-end.frontend.marcmarina.com`)"
         - "traefik.http.routers.front-end.entrypoints=web"
-        - "traefik.http.services.front-end.loadbalancer.server.port=5173"
+        - "traefik.http.services.front-end.loadbalancer.server.port=3000"
 
 networks:
   traefik:
