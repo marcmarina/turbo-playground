@@ -2,6 +2,7 @@ import os from 'os';
 import express from 'express';
 import promBundle from 'express-prom-bundle';
 import http from 'http';
+import cors from 'cors';
 
 import { getStore, httpContextWrapper } from '@app/context';
 import { httpLogger } from '@app/logger';
@@ -12,6 +13,8 @@ import { webSocketManager } from './web-socket-manager';
 
 export function createServer() {
   const app = express() as express.Express;
+
+  app.use(cors());
 
   app.set('trust proxy', true); // or specific IP/CIDR if needed
 
