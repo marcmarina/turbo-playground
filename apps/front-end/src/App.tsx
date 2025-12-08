@@ -4,7 +4,7 @@ import './App.css';
 import { useWebSocket } from './use-web-socket';
 
 function App() {
-  const { messages } = useWebSocket('wss://turbo.backend.marcmarina.com');
+  const { messages } = useWebSocket('https://turbo.backend.marcmarina.com');
 
   return (
     <>

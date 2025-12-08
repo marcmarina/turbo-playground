@@ -4,7 +4,6 @@ import path from 'path';
 const envFilePath = path.resolve(__dirname, '..', '.env');
 dotenv.config({ path: envFilePath });
 
-import http from 'http';
 import { createHttpTerminator } from 'http-terminator';
 
 import { logger } from '@app/logger';
