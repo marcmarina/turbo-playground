@@ -19,7 +19,11 @@ function App() {
       <h1>Vite + React</h1>
       <div>
         {messages.map((m, i) => {
-          return <div key={i}>{JSON.stringify(m)}</div>;
+          return (
+            <div className="flex flex-row p-3 gap-3" key={i}>
+              <p>{m.data}</p>
+            </div>
+          );
         })}
       </div>
     </>
