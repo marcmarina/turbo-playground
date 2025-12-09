@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: turbo
+  namespace: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: turbo
+  template:
+    metadata:
+      labels:
+        app: turbo
+    spec:
+      containers:
+      - name: turbo
+        image: harbor.marcmarina.com/library/turbo-playground
+        command: ["node", "apps/express-app"]
+        ports:
+        - containerPort: 8081  # Update with your app's port
+        env:
+        - name: LOG_LEVEL
+          value: "info"
+        - name: LOG_FORMAT
+          value: "pretty"
+        - name: ENABLE_REQUEST_LOGGING
+          value: "true"
+        - name: PORT
+          value: "8081"
+        - name: API_HOST
+          value: "http://turbo.backend"
+      # Only needed if Harbor requires auth:
+      imagePullSecrets:
+      - name: harbor-creds
