@@ -30,6 +30,13 @@ spec:
           value: "8081"
         - name: API_HOST
           value: "http://turbo.backend"
+        resources:          # Add this section
+          limits:
+            cpu: "500m"
+            memory: "250Gi"
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
       # Only needed if Harbor requires auth:
       imagePullSecrets:
       - name: harbor-creds
