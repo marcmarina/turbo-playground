@@ -70,7 +70,7 @@ export function createServer() {
     res.send(`Host: ${os.hostname()}`);
   });
 
-  app.get('/_health', (req, res, next) => {
+  app.get('/health', (req, res, next) => {
     res.send(`OK`);
   });
 
