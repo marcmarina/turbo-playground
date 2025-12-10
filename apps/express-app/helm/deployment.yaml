@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: turbo
+  name: turbo-express
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: turbo
+      app: turbo-express
   template:
     metadata:
       labels:
-        app: turbo
+        app: turbo-express
     spec:
       containers:
-      - name: turbo
+      - name: turbo-express
         image: harbor.marcmarina.com/library/turbo-playground
         command: ["node", "apps/express-app"]
         ports:

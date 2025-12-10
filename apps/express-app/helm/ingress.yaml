@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: turbo
+  name: turbo-express
   namespace: default
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web
@@ -14,6 +14,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: turbo
+            name: turbo-express
             port:
               number: 80

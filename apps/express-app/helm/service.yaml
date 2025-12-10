@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: turbo
+  name: turbo-express
   namespace: default
 spec:
   selector:
-    app: turbo
+    app: turbo-express
   ports:
   - protocol: TCP
     port: 80
