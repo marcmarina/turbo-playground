@@ -5,7 +5,7 @@ metadata:
   namespace: default
 spec:
   selector:
-    app: turbo
+    app: turbo-react
   ports:
   - protocol: TCP
     port: 80
