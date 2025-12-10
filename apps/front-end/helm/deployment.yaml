@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: turbo-react
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: turbo-react
+  template:
+    metadata:
+      labels:
+        app: turbo-react
+    spec:
+      containers:
+      - name: turbo-react
+        image: harbor.marcmarina.com/library/turbo-playground
+        command: ["yarn", "workspace", "front-end", "serve"]
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "250Gi"
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
+      imagePullSecrets:
+      - name: harbor-creds
