@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: turbo
-  namespace: backend
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -29,7 +29,7 @@ spec:
         - name: PORT
           value: "8081"
         - name: API_HOST
-          value: "http://turbo.backend"
+          value: "http://turbo.default"
         resources:          # Add this section
           limits:
             cpu: "500m"
