@@ -23,7 +23,7 @@ spec:
         - name: LOG_LEVEL
           value: "info"
         - name: LOG_FORMAT
-          value: "pretty"
+          value: "json"
         - name: ENABLE_REQUEST_LOGGING
           value: "true"
         - name: PORT
