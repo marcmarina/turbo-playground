@@ -1,0 +1,9 @@
+{
+  "name": "@app/jest-config",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
+  "main": "index.js"
+}
