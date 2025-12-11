@@ -8,8 +8,8 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxUnavailable: 0  # This ensures at least one pod stays running
-      maxSurge: 4        # Allow extra pods during the rollout
+      maxUnavailable: 0
+      maxSurge: 4
   selector:
     matchLabels:
       app: turbo-express
@@ -23,7 +23,7 @@ spec:
         image: harbor.marcmarina.com/library/turbo-playground
         command: ["node", "apps/express-app"]
         ports:
-        - containerPort: 8081  # Update with your app's port
+        - containerPort: 8081
         env:
         - name: LOG_LEVEL
           value: "info"
@@ -35,13 +35,18 @@ spec:
           value: "8081"
         - name: API_HOST
           value: "http://turbo.default"
-        resources:          # Add this section
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8081
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        resources:
           limits:
             cpu: "500m"
             memory: "250Gi"
           requests:
             cpu: "250m"
             memory: "512Mi"
-      # Only needed if Harbor requires auth:
       imagePullSecrets:
       - name: harbor-creds
