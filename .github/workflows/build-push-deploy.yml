@@ -1,4 +1,4 @@
-name: Build image and push to Docker Hub
+name: Build image, push to Harbor and deploy
 
 on:
   push:
@@ -24,3 +24,7 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: harbor.marcmarina.com/library/turbo-playground:latest
+    - name: Deploy to Dokploy
+      uses: enflo/curl-action@master
+      with:
+        curl: -X GET ${{ secrets.DEPLOY_HOOK_URL }}
