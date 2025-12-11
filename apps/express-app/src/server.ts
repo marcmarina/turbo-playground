@@ -83,6 +83,8 @@ export function createServer() {
   });
 
   app.use('/', (req, res) => {
+    res.status(404);
+
     res.send(`
     <html>
     <head>
