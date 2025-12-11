@@ -18,7 +18,7 @@ spec:
         image: harbor.marcmarina.com/library/turbo-playground
         command: ["yarn", "workspace", "front-end", "serve"]
         ports:
-        - containerPort: 3000
+        - containerPort: 80
         resources:
           limits:
             cpu: "500m"
