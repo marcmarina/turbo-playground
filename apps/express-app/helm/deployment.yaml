@@ -4,7 +4,12 @@ metadata:
   name: turbo-express
   namespace: default
 spec:
-  replicas: 1
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0  # This ensures at least one pod stays running
+      maxSurge: 4        # Allow extra pods during the rollout
   selector:
     matchLabels:
       app: turbo-express
