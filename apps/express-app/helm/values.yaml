@@ -23,7 +23,7 @@ service:
   port: 80
 
 ingress:
-  host: turbo-express.backend.marcmarina.com
+  host: turbo-express.k3s.marc-lab.dev
 
 env:
  LOG_LEVEL: info
