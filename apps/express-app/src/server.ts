@@ -16,8 +16,6 @@ export function createServer() {
 
   app.use(cors());
 
-  app.set('trust proxy', true); // or specific IP/CIDR if needed
-
   app.use(
     // @ts-expect-error This is an issue with the types
     promBundle({
