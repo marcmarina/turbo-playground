@@ -10,8 +10,7 @@ container:
   port: 8080
 
 deployment:
-  strategy:
-    replicaCount: 3
+  replicaCount: 2
 
 readinessProbe:
   path: /health
