@@ -29,6 +29,14 @@ jobs:
           push: true
           tags: harbor.marcmarina.com/library/turbo-playground:${{ github.sha }}
 
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: harbor.marcmarina.com/library/turbo-playground:latest
+
   deploy-backend:
     name: Deploy Express Backend
     needs: build-and-push
