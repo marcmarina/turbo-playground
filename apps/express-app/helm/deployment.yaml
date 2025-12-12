@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: turbo-express
-        image: harbor.marcmarina.com/library/turbo-playground
+        image: harbor.marcmarina.com/library/turbo-playground:latest
         command: ["node", "apps/express-app"]
         ports:
         - containerPort: 80
