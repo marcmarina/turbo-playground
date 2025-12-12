@@ -26,7 +26,7 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: harbor.marcmarina.com/library/turbo-playground:latest
+        tags: harbor.marcmarina.com/library/turbo-playground:${{ github.sha}}
 
     - name: Connect to Tailscale
       uses: tailscale/github-action@v2
@@ -44,8 +44,10 @@ jobs:
     - name: Deploy to K3s
       run: |
         kubectl apply -f apps/express-app/helm
+        kubectl set image deployment/turbo-express turbo-express=harbor.marcmarina.com/library/turbo-playground:${{ github.sha }}
         kubectl rollout status deployment/turbo-express
         kubectl apply -f apps/front-end/helm
+        kubectl set image deployment/turbo-react turbo-react=harbor.marcmarina.com/library/turbo-playground:${{ github.sha }}
         kubectl rollout status deployment/turbo-react
 
     # - name: Verify deployment
