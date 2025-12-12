@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: turbo-express
+  name: {{ .Chart.name }}
   namespace: default
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -12,14 +12,15 @@ spec:
       maxSurge: 50%
   selector:
     matchLabels:
-      app: turbo-express
+      app: {{ .Chart.name }}
   template:
     metadata:
       labels:
-        app: turbo-express
+        app: {{ .Chart.name }}
+      app: {{ .Chart.name }}
     spec:
       containers:
-      - name: turbo-express
+      - name: {{ .Chart.name }}
         image: harbor.marcmarina.com/library/turbo-playground:latest
         imagePullPolicy: Always
         command: ["node", "apps/express-app"]

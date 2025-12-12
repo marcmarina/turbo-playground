@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: turbo-express
+  name: {{ .Chart.name }}
   namespace: default
 spec:
   selector:
-    app: turbo-express
+    app: {{ .Chart.name }}
   ports:
   - protocol: TCP
     port: 80
-    targetPort: 80
+    targetPort: {{ .Values.service.port }}
   type: ClusterIP
