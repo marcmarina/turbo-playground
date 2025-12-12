@@ -90,27 +90,3 @@ jobs:
           kubectl set image deployment/turbo-react \
             turbo-react=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
           kubectl rollout status deployment/turbo-react --timeout=5m
-
-  verify:
-    name: Verify Deployment
-    needs: [deploy-backend, deploy-frontend]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Connect to Tailscale
-        uses: tailscale/github-action@v2
-        with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:ci
-      
-      - name: Configure kubectl
-        run: |
-          mkdir -p ~/.kube
-          echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
-          kubectl config set-cluster default --server=https://k3s-master:6443
-      
-      - name: Check deployment status
-        run: |
-          kubectl get pods -l app=turbo-express
-          kubectl get pods -l app=turbo-react
-          echo "✅ All deployments successful!"
