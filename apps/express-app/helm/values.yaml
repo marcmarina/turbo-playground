@@ -23,5 +23,5 @@ env:
  LOG_LEVEL: info
  LOG_FORMAT: json
  ENABLE_REQUEST_LOGGING: true
- PORT: 8080
+ PORT: 80
  API_HOST: http://turbo
