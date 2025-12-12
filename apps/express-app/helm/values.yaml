@@ -1,0 +1,27 @@
+namespace: default
+
+image:
+  repository: harbor.marcmarina.com/library/turbo-playground
+  tag: latest
+  pullPolicy: IfNotPresent
+
+container:
+  command: "['node', 'apps/express-app']"
+
+deployment:
+  strategy:
+    replicaCount: 3
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  host: turbo-express.backend.marcmarina.com
+
+env:
+ LOG_LEVEL: info
+ LOG_FORMAT: json
+ ENABLE_REQUEST_LOGGING: true
+ PORT: 80
+ API_HOST: http://turbo
