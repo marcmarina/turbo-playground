@@ -83,9 +83,7 @@ export function createServer() {
   });
 
   app.use('/', (req, res) => {
-    res.status(404);
-
-    res.send(`
+    res.status(404).send(`
     <html>
     <head>
       <title>Express App</title>
