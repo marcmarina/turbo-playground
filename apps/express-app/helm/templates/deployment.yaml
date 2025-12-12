@@ -20,22 +20,16 @@ spec:
     spec:
       containers:
       - name: {{ .Chart.Name }}
-        image: harbor.marcmarina.com/library/turbo-playground:latest
-        imagePullPolicy: Always
-        command: ["node", "apps/express-app"]
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy}}
+        command: {{ .Values.container.command }}
         ports:
         - containerPort: 80
         env:
-        - name: LOG_LEVEL
-          value: "info"
-        - name: LOG_FORMAT
-          value: "json"
-        - name: ENABLE_REQUEST_LOGGING
-          value: "true"
-        - name: PORT
-          value: "80"
-        - name: API_HOST
-          value: "http://turbo"
+        {{- range $key, $value := .Values.env }}
+        - name: {{ $key }}
+          value: {{ $value | quote }}
+        {{- end }}
         readinessProbe:
           httpGet:
             path: /health
