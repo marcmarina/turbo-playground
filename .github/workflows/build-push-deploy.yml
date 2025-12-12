@@ -63,7 +63,7 @@ jobs:
           helm upgrade --install turbo-express ./apps/express-app/helm \
             --set image.tag=${{ github.sha }} \
             --wait \
-            --timeout 5m
+            --timeout 1m
 
   deploy-frontend:
     name: Deploy React Frontend
