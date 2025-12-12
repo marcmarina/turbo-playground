@@ -9,14 +9,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+
     - name: Copy build dependencies
       run: ./copy-build-deps.sh
+
     - name: Log in to Docker Hub
       uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
       with:
         registry: harbor.marcmarina.com
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+
     - name: Build and push Docker image
       uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
       with:
@@ -24,7 +27,29 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: harbor.marcmarina.com/library/turbo-playground:latest
-    - name: Deploy to Dokploy
-      uses: enflo/curl-action@master
+
+    - name: Connect to Tailscale
+      uses: tailscale/github-action@v2
       with:
-        curl: -X GET ${{ secrets.DEPLOY_HOOK_URL }}
+        oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+        oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+        tags: tag:ci
+
+    - name: Configure kubectl
+      run: |
+        mkdir -p ~/.kube
+        echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
+        # Update server URL to use Tailscale hostname
+        kubectl config set-cluster default --server=https://k3s-master:6443
+        
+    - name: Deploy to K3s
+      run: |
+        kubectl apply -f apps/express-app/helm
+        kubectl rollout status deployment/turbo-express
+        kubectl apply -f apps/front-end/helm
+        kubectl rollout status deployment/turbo-react
+
+    # - name: Verify deployment
+    #   run: |
+    #     kubectl get pods -l app=your-app
+
