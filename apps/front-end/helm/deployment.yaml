@@ -16,6 +16,7 @@ spec:
       containers:
       - name: turbo-react
         image: harbor.marcmarina.com/library/turbo-playground:latest
+        imagePullPolicy: Always
         command: ["yarn", "workspace", "front-end", "start", "-l", "80"]
         ports:
         - containerPort: 80

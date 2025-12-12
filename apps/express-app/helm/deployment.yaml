@@ -21,6 +21,7 @@ spec:
       containers:
       - name: turbo-express
         image: harbor.marcmarina.com/library/turbo-playground:latest
+        imagePullPolicy: Always
         command: ["node", "apps/express-app"]
         ports:
         - containerPort: 80
