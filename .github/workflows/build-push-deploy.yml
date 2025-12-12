@@ -58,12 +58,12 @@ jobs:
           echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
           kubectl config set-cluster default --server=https://k3s-master:6443
       
-      - name: Deploy Express app
+      - name: Deploy Express Backend
         run: |
-          kubectl apply -f apps/express-app/helm
-          kubectl set image deployment/turbo-express \
-            turbo-express=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-          kubectl rollout status deployment/turbo-express --timeout=5m
+          helm upgrade --install turbo-express ./apps/express-app/helm \
+            --set image.tag=${{ github.sha }} \
+            --wait \
+            --timeout 5m
 
   deploy-frontend:
     name: Deploy React Frontend
