@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Chart.name }}
+  name: {{ .Chart.Name }}
   namespace: default
 spec:
   replicas: {{ .Values.replicaCount }}
@@ -12,15 +12,15 @@ spec:
       maxSurge: 50%
   selector:
     matchLabels:
-      app: {{ .Chart.name }}
+      app: {{ .Chart.Name }}
   template:
     metadata:
       labels:
-        app: {{ .Chart.name }}
-      app: {{ .Chart.name }}
+        app: {{ .Chart.Name }}
+      app: {{ .Chart.Name }}
     spec:
       containers:
-      - name: {{ .Chart.name }}
+      - name: {{ .Chart.Name }}
         image: harbor.marcmarina.com/library/turbo-playground:latest
         imagePullPolicy: Always
         command: ["node", "apps/express-app"]
