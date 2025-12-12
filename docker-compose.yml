@@ -1,40 +1,16 @@
+name: databases
+
 services:
-  express-app:
-    image: harbor.marcmarina.com/library/turbo-playground:latest
-    command: node apps/express-app
-    networks:
-      - traefik
-    env_file:
-      - apps/express-app/.env
-    deploy:
-      update_config:
-        delay: 5s
-        parallelism: 1
-        order: start-first
-      labels:
-        - "traefik.swarm.network=traefik"
-        - "traefik.enable=true"
-        - "traefik.http.routers.turbo-backend.rule=Host(`turbo.backend.marcmarina.com`)"
-        - "traefik.http.routers.turbo-backend.entrypoints=web"
-        - "traefik.http.services.turbo-backend.loadbalancer.server.port=8081"
+  db:
+    image: postgres:16.2
+    environment:
+      POSTGRES_DB: database
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - "postgres_data:/var/lib/postgresql"
 
-  front-end:
-    image: harbor.marcmarina.com/library/turbo-playground:latest
-    command: yarn workspace front-end serve
-    networks:
-      - traefik
-    deploy:
-      update_config:
-        delay: 5s
-        parallelism: 1
-        order: start-first
-      labels:
-        - "traefik.swarm.network=traefik"
-        - "traefik.enable=true"
-        - "traefik.http.routers.turbo-frontend.rule=Host(`turbo.frontend.marcmarina.com`)"
-        - "traefik.http.routers.turbo-frontend.entrypoints=web"
-        - "traefik.http.services.turbo-frontend.loadbalancer.server.port=3000"
-
-networks:
-  traefik:
-    external: true
+volumes:
+  postgres_data:
