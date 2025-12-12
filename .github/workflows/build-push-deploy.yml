@@ -4,6 +4,10 @@ on:
   push:
     branches: ["master"]
 
+env:
+  REGISTRY: harbor.marcmarina.com
+  IMAGE_NAME: library/turbo-playground
+
 jobs:
   build-and-push:
     name: Build and Push Image
