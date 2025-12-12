@@ -32,15 +32,15 @@ spec:
         {{- end }}
         readinessProbe:
           httpGet:
-            path: /health
-            port: 80
+            path: {{ .Values.readinessProbe.path }}
+            port: {{ .Values.container.port }}
           initialDelaySeconds: 5  # Wait before first check
           periodSeconds: 5
           failureThreshold: 3
         livenessProbe:
           httpGet:
-            path: /health
-            port: 80
+            path: {{ .Values.livenessProbe.path }}
+            port: {{ .Values.container.port }}
           initialDelaySeconds: 15  # Give more time than readiness
           periodSeconds: 10
           failureThreshold: 3

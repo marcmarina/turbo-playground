@@ -7,10 +7,17 @@ image:
 
 container:
   command: "['node', 'apps/express-app']"
+  port: 8080
 
 deployment:
   strategy:
     replicaCount: 3
+
+readinessProbe:
+  path: /health
+
+livenessProbe:
+  path: /health
 
 service:
   type: ClusterIP
@@ -23,5 +30,5 @@ env:
  LOG_LEVEL: info
  LOG_FORMAT: json
  ENABLE_REQUEST_LOGGING: true
- PORT: 80
+ PORT: 8080
  API_HOST: http://turbo
