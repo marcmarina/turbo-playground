@@ -34,7 +34,7 @@ server.listen(config.port, () => {
 
 const terminator = createHttpTerminator({
   server: server,
-  gracefulTerminationTimeout: 10000,
+  gracefulTerminationTimeout: 30000,
 });
 
 const shutdownHandler = async (signal: NodeJS.Signals) => {

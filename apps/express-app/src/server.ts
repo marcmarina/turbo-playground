@@ -7,7 +7,6 @@ import cors from 'cors';
 import { getStore, httpContextWrapper } from '@app/context';
 import { httpLogger } from '@app/logger';
 
-import packageJson from '../package.json';
 import { httpClient } from './http-client';
 import { webSocketManager } from './web-socket-manager';
 
