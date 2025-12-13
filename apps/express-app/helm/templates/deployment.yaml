@@ -30,6 +30,10 @@ spec:
         - name: {{ $key }}
           value: {{ $value | quote }}
         {{- end }}
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/bin/sh", "-c", "sleep {{ .Values.deployment.preStop.delay }}"]
         readinessProbe:
           httpGet:
             path: {{ .Values.readinessProbe.path }}

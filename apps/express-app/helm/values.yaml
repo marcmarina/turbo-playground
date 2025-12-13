@@ -11,6 +11,8 @@ container:
 
 deployment:
   replicaCount: 2
+  preStop:
+    delay: 5
 
 readinessProbe:
   path: /health
