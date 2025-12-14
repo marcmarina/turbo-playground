@@ -49,11 +49,6 @@ spec:
           periodSeconds: 10
           failureThreshold: 3
         resources:
-          limits:
-            cpu: "500m"
-            memory: "250Gi"
-          requests:
-            cpu: "250m"
-            memory: "512Mi"
+{{ toYaml .Values.resources | indent 10 }}
       imagePullSecrets:
       - name: harbor-creds
