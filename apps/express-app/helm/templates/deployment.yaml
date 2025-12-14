@@ -50,5 +50,3 @@ spec:
           failureThreshold: 3
         resources:
 {{ toYaml .Values.resources | indent 10 }}
-      imagePullSecrets:
-      - name: harbor-creds
