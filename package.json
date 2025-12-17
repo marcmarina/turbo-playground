@@ -1,10 +1,9 @@
 {
-  "name": "turborepo-playground",
+  "name": "turbo-playground",
   "version": "0.0.1",
   "private": true,
   "description": "",
   "license": "UNLICENSED",
-  "main": "index.js",
   "workspaces": [
     "apps/*",
     "packages/*"
@@ -17,9 +16,6 @@
     "test": "turbo run test",
     "turbo": "turbo",
     "verify": "turbo run verify"
-  },
-  "resolutions": {
-    "graphql": "^16.8.1"
   },
   "dependencies": {
     "express-prom-bundle": "^8.0.0",
@@ -38,6 +34,6 @@
   },
   "packageManager": "yarn@4.1.1",
   "engines": {
-    "node": "20.x"
+    "node": "20.19.x"
   }
 }
