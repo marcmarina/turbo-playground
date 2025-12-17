@@ -1,4 +1,3 @@
-import os from 'os';
 import express from 'express';
 import promBundle from 'express-prom-bundle';
 import http from 'http';
@@ -7,7 +6,6 @@ import cors from 'cors';
 import { getStore, httpContextWrapper } from '@app/context';
 import { httpLogger } from '@app/logger';
 
-import { httpClient } from './http-client';
 import { webSocketManager } from './web-socket-manager';
 
 export function createServer() {
@@ -53,21 +51,7 @@ export function createServer() {
     return res.status(204).send();
   });
 
-  app.get('/get-pod-host', async (req, res, next) => {
-    try {
-      const response = await httpClient.get('/host');
-
-      res.send(response.data);
-    } catch (err) {
-      next(err);
-    }
-  });
-
-  app.get('/host', (req, res) => {
-    res.send(`Host: ${os.hostname()}`);
-  });
-
-  app.get('/health', (req, res, next) => {
+  app.get('/_health', (req, res, next) => {
     res.send(`OK`);
   });
 

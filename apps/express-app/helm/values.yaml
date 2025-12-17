@@ -26,10 +26,10 @@ resources:
     memory: 512Mi
 
 readinessProbe:
-  path: /health
+  path: /_health
 
 livenessProbe:
-  path: /health
+  path: /_health
 
 service:
   type: ClusterIP
