@@ -17,6 +17,9 @@ deployment:
   preStop:
     delay: 5
 
+metrics:
+  endpoint: /metrics
+
 resources:
   requests:
     cpu: 250m
