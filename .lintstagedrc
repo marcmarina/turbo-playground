@@ -1,0 +1,4 @@
+{
+  "package.json": ["sort-package-json -- --write"],
+  "*.ts": ["eslint --fix --quiet", "prettier --write"]
+}
