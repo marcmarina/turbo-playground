@@ -44,6 +44,6 @@ ingress:
 env:
  LOG_LEVEL: info
  LOG_FORMAT: json
- ENABLE_REQUEST_LOGGING: true
+ ENABLE_REQUEST_LOGGING: false
  PORT: 8080
  API_HOST: http://turbo
