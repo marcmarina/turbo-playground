@@ -19,6 +19,7 @@ export function createServer() {
       formatStatusCode: (res) => {
         return res.statusCode.toString().charAt(0) + 'xx';
       },
+      excludeRoutes: ['/_health'],
       includeMethod: true,
       includePath: true,
       includeStatusCode: true,
