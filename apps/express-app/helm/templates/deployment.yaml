@@ -22,7 +22,7 @@ spec:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy}}
-        command: {{ .Values.container.command }}
+        command: {{ toYaml .Values.container.command | trim }}
         ports:
         - containerPort: {{ .Values.container.port }}
         env:
