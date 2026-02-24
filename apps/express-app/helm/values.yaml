@@ -6,7 +6,7 @@ image:
   pullPolicy: IfNotPresent
 
 container:
-  command: "['node', 'apps/express-app']"
+  command: ["node", "apps/express-app"]
   port: 8080
 
 deployment:
