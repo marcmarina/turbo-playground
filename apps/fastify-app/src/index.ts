@@ -4,48 +4,42 @@ import path from 'path';
 const envFilePath = path.resolve(__dirname, '..', '.env');
 dotenv.config({ path: envFilePath });
 
+import { createHttpTerminator } from 'http-terminator';
+
 import { logger } from '@app/logger';
-import Fastify from 'fastify';
-import {
-  serializerCompiler,
-  validatorCompiler,
-  type ZodTypeProvider,
-} from 'fastify-type-provider-zod';
-import { z } from 'zod/v4';
+import { port } from './config';
+import { createServer } from './server';
 
-const fastify = Fastify({
-  loggerInstance: logger,
-})
-  .withTypeProvider<ZodTypeProvider>()
-  .setValidatorCompiler(validatorCompiler)
-  .setSerializerCompiler(serializerCompiler);
-
-fastify.post(
-  '/user',
-  {
-    schema: {
-      body: z.object({
-        foo: z.string(),
-      }),
-    },
-  },
-  async () => {
-    return { hello: 'world' };
-  },
-);
-
-fastify.get('/_health', async () => {
-  return 'OK';
-});
+const app = createServer();
 
 const start = async () => {
   try {
-    await fastify.listen({ port: 3000 });
+    await app.listen({ port });
   } catch (err) {
-    fastify.log.error(err);
+    app.log.error(err);
 
     process.exit(1);
   }
+
+  const terminator = createHttpTerminator({
+    server: app.server,
+    gracefulTerminationTimeout: 30000,
+  });
+
+  const shutdownHandler = async (signal: NodeJS.Signals) => {
+    logger.info(`Received ${signal}. Shutting down server.`);
+
+    await terminator.terminate();
+
+    logger.info('Server terminated. Exiting process.');
+    process.exit(0);
+  };
+
+  const signals: NodeJS.Signals[] = ['SIGTERM', 'SIGINT'];
+
+  signals.forEach((signal) => {
+    process.on(signal, () => shutdownHandler(signal));
+  });
 };
 
 start();
