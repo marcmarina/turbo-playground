@@ -1,4 +1,3 @@
-import { logger } from '@app/logger';
 import Fastify from 'fastify';
 import {
   serializerCompiler,
@@ -6,6 +5,8 @@ import {
   type ZodTypeProvider,
 } from 'fastify-type-provider-zod';
 import { z } from 'zod/v4';
+
+import { logger } from '@app/logger';
 
 export function createServer() {
   const app = Fastify({

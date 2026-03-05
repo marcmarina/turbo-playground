@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
+    "lint": "eslint src",
     "start": "nodemon --exec ts-node src/index.ts",
     "test": "jest --passWithNoTests"
   },
@@ -19,8 +20,10 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@app/eslint-config": "*",
     "@app/jest-config": "*",
     "@app/tsconfig": "*",
+    "eslint": "^9.0.0",
     "nodemon": "^3.1.0"
   }
 }

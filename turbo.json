@@ -26,6 +26,11 @@
       "cache": false,
       "persistent": true
     },
+    "lint": {
+      "inputs": ["src/**", "eslint.config.*"],
+      "outputs": [],
+      "cache": true
+    },
     "verify": {
       "dependsOn": ["build", "test"],
       "outputs": [],

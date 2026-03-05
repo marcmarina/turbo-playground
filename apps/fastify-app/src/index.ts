@@ -7,6 +7,7 @@ dotenv.config({ path: envFilePath });
 import { createHttpTerminator } from 'http-terminator';
 
 import { logger } from '@app/logger';
+
 import { port } from './config';
 import { createServer } from './server';
 
