@@ -1,0 +1,26 @@
+{
+  "name": "fastify-app",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "nodemon --exec ts-node src/index.ts",
+    "test": "jest --passWithNoTests"
+  },
+  "dependencies": {
+    "@app/config": "*",
+    "@app/context": "*",
+    "@app/logger": "*",
+    "dotenv": "^16.4.5",
+    "fastify": "^5.8.1",
+    "fastify-type-provider-zod": "^6.1.0",
+    "http-terminator": "^3.2.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@app/jest-config": "*",
+    "@app/tsconfig": "*",
+    "nodemon": "^3.1.0"
+  }
+}
