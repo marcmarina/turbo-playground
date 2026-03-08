@@ -1,7 +1,7 @@
+import cors from 'cors';
 import express from 'express';
 import promBundle from 'express-prom-bundle';
 import http from 'http';
-import cors from 'cors';
 
 import { getStore, httpContextWrapper } from '@app/context';
 import { httpLogger } from '@app/logger';
@@ -52,11 +52,11 @@ export function createServer() {
     return res.status(204).send();
   });
 
-  app.get('/_health', (req, res, next) => {
+  app.get('/_health', (req, res, _next) => {
     res.send(`OK`);
   });
 
-  app.post('/message', (req, res, next) => {
+  app.post('/message', (req, res, _next) => {
     webSocketManager.broadcast(req.body);
 
     res.send({
@@ -64,11 +64,15 @@ export function createServer() {
     });
   });
 
+  app.post('/exit', (req) => {
+    process.exit(req.body.code);
+  });
+
   app.use((req, res) => {
     res.status(404).send(`Cannot ${req.method} ${req.url}`);
   });
 
-  app.use((error, req, res, next) => {
+  app.use((error, req, res, _next) => {
     res.status(500).send(error.message);
   });
 
