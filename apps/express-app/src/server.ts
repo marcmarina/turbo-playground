@@ -64,6 +64,10 @@ export function createServer() {
     });
   });
 
+  app.get('/datetime', (req, res) => {
+    res.send(new Date());
+  });
+
   app.post('/exit', (req) => {
     process.exit(req.body.code);
   });
