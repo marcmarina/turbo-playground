@@ -2,6 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import promBundle from 'express-prom-bundle';
 import http from 'http';
+import os from 'os';
 
 import { getStore, httpContextWrapper } from '@app/context';
 import { httpLogger } from '@app/logger';
@@ -64,8 +65,8 @@ export function createServer() {
     });
   });
 
-  app.get('/datetime', (req, res) => {
-    res.send(new Date());
+  app.get('/host', (req, res) => {
+    res.send(os.hostname());
   });
 
   app.post('/exit', (req) => {
