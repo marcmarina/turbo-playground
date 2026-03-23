@@ -9,10 +9,13 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "lint": "eslint src",
     "test": "jest --passWithNoTests"
   },
   "devDependencies": {
+    "@app/eslint-config": "*",
     "@app/jest-config": "*",
-    "@app/tsconfig": "*"
+    "@app/tsconfig": "*",
+    "eslint": "^9.0.0"
   }
 }

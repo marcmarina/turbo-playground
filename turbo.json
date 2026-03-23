@@ -1,5 +1,5 @@
 {
-  "$schema": "https://turbo.build/schema.json",
+  "$schema": "https://turborepo.dev/schema.json",
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -10,7 +10,7 @@
     },
     "test": {
       "inputs": ["src/**"],
-      "dependsOn": ["^test"],
+      "dependsOn": ["build"],
       "cache": true,
       "outputLogs": "new-only"
     },
@@ -29,7 +29,8 @@
     "lint": {
       "inputs": ["src/**", "eslint.config.*"],
       "outputs": [],
-      "cache": true
+      "cache": true,
+      "outputLogs": "new-only"
     },
     "verify": {
       "dependsOn": ["build", "test"],

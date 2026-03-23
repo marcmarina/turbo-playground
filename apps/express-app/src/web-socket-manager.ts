@@ -1,5 +1,5 @@
-import { WebSocketServer, WebSocket } from 'ws';
 import { Server } from 'http';
+import { WebSocket, WebSocketServer } from 'ws';
 
 class WebSocketManager {
   private wss: WebSocketServer | null = null;

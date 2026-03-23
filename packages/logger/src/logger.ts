@@ -26,7 +26,7 @@ export const httpLogger = pinoHttp({
 
     return crypto.randomUUID();
   },
-  customLogLevel: (req, res, err) => {
+  customLogLevel: (req, res) => {
     if (400 <= res.statusCode && res.statusCode < 500) {
       return 'warn';
     } else if (500 <= res.statusCode) {

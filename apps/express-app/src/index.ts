@@ -8,8 +8,8 @@ import { createHttpTerminator } from 'http-terminator';
 
 import { logger } from '@app/logger';
 
-import { createServer } from './server';
 import * as config from './config';
+import { createServer } from './server';
 import { webSocketManager } from './web-socket-manager';
 
 process.on('uncaughtException', (err) => {

@@ -19,8 +19,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@app/config@workspace:packages/config"
   dependencies:
+    "@app/eslint-config": "npm:*"
     "@app/jest-config": "npm:*"
     "@app/tsconfig": "npm:*"
+    eslint: "npm:^9.0.0"
   languageName: unknown
   linkType: soft
 
@@ -28,8 +30,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@app/context@workspace:packages/context"
   dependencies:
+    "@app/eslint-config": "npm:*"
     "@app/jest-config": "npm:*"
     "@app/tsconfig": "npm:*"
+    eslint: "npm:^9.0.0"
   languageName: unknown
   linkType: soft
 
@@ -54,8 +58,10 @@ __metadata:
   resolution: "@app/logger@workspace:packages/logger"
   dependencies:
     "@app/config": "npm:*"
+    "@app/eslint-config": "npm:*"
     "@app/jest-config": "npm:*"
     "@app/tsconfig": "npm:*"
+    eslint: "npm:^9.0.0"
     pino: "npm:^9.0.0"
     pino-http: "npm:^10.3.0"
     pino-pretty: "npm:^11.0.0"
@@ -4235,6 +4241,7 @@ __metadata:
   dependencies:
     "@app/config": "npm:*"
     "@app/context": "npm:*"
+    "@app/eslint-config": "npm:*"
     "@app/jest-config": "npm:*"
     "@app/logger": "npm:*"
     "@app/tsconfig": "npm:*"
@@ -4243,6 +4250,7 @@ __metadata:
     "@types/ws": "npm:^8.18.1"
     cors: "npm:^2.8.5"
     dotenv: "npm:^16.4.5"
+    eslint: "npm:^9.0.0"
     express: "npm:^4.18.3"
     http-terminator: "npm:^3.2.0"
     nodemon: "npm:^3.1.0"
@@ -6004,6 +6012,7 @@ __metadata:
   dependencies:
     "@app/config": "npm:*"
     "@app/context": "npm:*"
+    "@app/eslint-config": "npm:*"
     "@app/jest-config": "npm:*"
     "@app/logger": "npm:*"
     "@app/tsconfig": "npm:*"
@@ -6011,6 +6020,7 @@ __metadata:
     "@types/koa": "npm:^2.15.0"
     "@types/koa-router": "npm:^7.4.8"
     dotenv: "npm:^16.4.5"
+    eslint: "npm:^9.0.0"
     express: "npm:^4.18.3"
     koa: "npm:^2.15.0"
     koa-router: "npm:^12.0.1"

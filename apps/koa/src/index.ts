@@ -7,8 +7,9 @@ dotenv.config({
   path: envFilePath,
 });
 
-import * as config from './config';
 import { logger } from '@app/logger';
+
+import * as config from './config';
 import { createServer } from './server';
 
 process.on('uncaughtException', (err) => {
