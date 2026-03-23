@@ -84,6 +84,15 @@ export function createServer() {
     res.json({ released: true });
   });
 
+  app.get('/stress/cpu', (req, res) => {
+    const durationMs = parseInt(req.query.duration as string) || 5000;
+    const end = Date.now() + durationMs;
+    while (Date.now() < end) {
+      Math.sqrt(Math.random());
+    }
+    res.json({ duration: `${durationMs}ms` });
+  });
+
   app.get('/host', (req, res) => {
     res.send(os.hostname());
   });
