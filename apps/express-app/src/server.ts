@@ -9,7 +9,7 @@ import { httpLogger } from '@app/logger';
 
 import { webSocketManager } from './web-socket-manager';
 
-const leaks: Array<Buffer<ArrayBuffer>> = [];
+const leaks: Buffer[] = [];
 
 export function createServer() {
   const app = express() as express.Express;
