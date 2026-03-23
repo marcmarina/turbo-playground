@@ -9,6 +9,8 @@ import { httpLogger } from '@app/logger';
 
 import { webSocketManager } from './web-socket-manager';
 
+const leaks: Array<Buffer<ArrayBuffer>> = [];
+
 export function createServer() {
   const app = express() as express.Express;
 
@@ -63,6 +65,23 @@ export function createServer() {
     res.send({
       success: true,
     });
+  });
+
+  app.get('/stress/memory', (req, res) => {
+    const mb = parseInt(req.query.mb as string) || 100;
+    for (let i = 0; i < mb; i++) {
+      leaks.push(Buffer.alloc(1024 * 1024, 1)); // fill with 1s, prevents lazy allocation
+    }
+    res.json({
+      requested: `${mb}MB`,
+      heapUsed: `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(1)}MB`,
+      rss: `${(process.memoryUsage().rss / 1024 / 1024).toFixed(1)}MB`,
+    });
+  });
+
+  app.get('/stress/memory/release', (req, res) => {
+    leaks.length = 0;
+    res.json({ released: true });
   });
 
   app.get('/host', (req, res) => {
