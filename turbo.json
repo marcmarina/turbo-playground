@@ -33,7 +33,7 @@
       "outputLogs": "new-only"
     },
     "verify": {
-      "dependsOn": ["build", "test"],
+      "dependsOn": ["build", "test", "lint"],
       "outputs": [],
       "cache": true
     }
