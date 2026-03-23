@@ -7,8 +7,6 @@ import os from 'os';
 import { getStore, httpContextWrapper } from '@app/context';
 import { httpLogger } from '@app/logger';
 
-import { webSocketManager } from './web-socket-manager';
-
 const leaks: Buffer[] = [];
 
 export function createServer() {
@@ -57,14 +55,6 @@ export function createServer() {
 
   app.get('/_health', (req, res, _next) => {
     res.send(`OK`);
-  });
-
-  app.post('/message', (req, res, _next) => {
-    webSocketManager.broadcast(req.body);
-
-    res.send({
-      success: true,
-    });
   });
 
   app.get('/stress/memory', (req, res) => {

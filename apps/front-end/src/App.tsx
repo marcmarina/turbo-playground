@@ -1,11 +1,8 @@
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
-import { useWebSocket } from './use-web-socket';
 
-function App() {
-  const { messages } = useWebSocket('https://turbo.backend.marcmarina.com');
-
+export default function App() {
   return (
     <>
       <div>
@@ -17,13 +14,6 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
-      <div>
-        {messages.map((m, i) => {
-          return <div key={i}>{JSON.stringify(m)}</div>;
-        })}
-      </div>
     </>
   );
 }
-
-export default App;
