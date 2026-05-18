@@ -16,6 +16,17 @@ const createUserSchema = z.object({
 
 const leaks: Buffer[] = [];
 
+function simulateDbLatency(): Promise<void> {
+  // 10% chance of an outlier (500–2000ms), otherwise 50–250ms
+  const isOutlier = Math.random() < 0.1;
+
+  const delay = isOutlier
+    ? 500 + Math.random() * 1500
+    : 50 + Math.random() * 200;
+
+  return new Promise((resolve) => setTimeout(resolve, delay));
+}
+
 export function createServer() {
   const app = express();
 
@@ -53,8 +64,10 @@ export function createServer() {
 
   app.use(httpLogger);
 
-  app.post('/user', (req, res) => {
+  app.post('/user', async (req, res) => {
     const body = createUserSchema.parse(req.body);
+
+    await simulateDbLatency();
 
     res.json(body);
   });
