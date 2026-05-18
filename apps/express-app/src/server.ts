@@ -3,23 +3,26 @@ import express from 'express';
 import promBundle from 'express-prom-bundle';
 import http from 'http';
 import os from 'os';
+import { z, ZodError } from 'zod/v4';
 
 import { getStore, httpContextWrapper } from '@app/context';
-import { httpLogger } from '@app/logger';
+import { httpLogger, logger } from '@app/logger';
+
+const createUserSchema = z.object({
+  userId: z.string(),
+  name: z.string(),
+  email: z.email(),
+});
 
 const leaks: Buffer[] = [];
 
 export function createServer() {
-  const app = express() as express.Express;
+  const app = express();
 
   app.use(cors());
 
   app.use(
-    // @ts-expect-error This is an issue with the types
     promBundle({
-      formatStatusCode: (res) => {
-        return res.statusCode.toString().charAt(0) + 'xx';
-      },
       excludeRoutes: ['/_health'],
       includeMethod: true,
       includePath: true,
@@ -49,6 +52,12 @@ export function createServer() {
   });
 
   app.use(httpLogger);
+
+  app.post('/user', (req, res) => {
+    const body = createUserSchema.parse(req.body);
+
+    res.json(body);
+  });
 
   app.get('/favicon.ico', (req, res) => {
     return res.status(204).send();
@@ -97,6 +106,13 @@ export function createServer() {
   });
 
   app.use((error, req, res, _next) => {
+    logger.error(error, 'Request error');
+
+    if (error instanceof ZodError) {
+      res.status(400).json({ errors: error.issues });
+      return;
+    }
+
     res.status(500).send(error.message);
   });
 

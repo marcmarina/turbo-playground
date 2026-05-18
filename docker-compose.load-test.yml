@@ -1,0 +1,36 @@
+name: load-test
+
+services:
+  express-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: node apps/express-app/dist/index.js
+    ports:
+      - "8080:8080"
+    environment:
+      - ENABLE_REQUEST_LOGGING=false
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('http').get('http://localhost:8080/_health', r => process.exit(r.statusCode === 200 ? 0 : 1))",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+
+  k6:
+    image: grafana/k6
+    command: run /scripts/post-user.js
+    volumes:
+      - ./apps/express-app/src/load-tests:/scripts
+    environment:
+      - BASE_URL=https://turbo-express.marc-lab.dev
+      # - BASE_URL=http://express-app:8080
+    depends_on:
+      express-app:
+        condition: service_healthy
