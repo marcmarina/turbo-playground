@@ -3,29 +3,14 @@ import express from 'express';
 import promBundle from 'express-prom-bundle';
 import http from 'http';
 import os from 'os';
-import { z, ZodError } from 'zod/v4';
+import { ZodError } from 'zod';
 
 import { getStore, httpContextWrapper } from '@app/context';
 import { httpLogger, logger } from '@app/logger';
 
-const createUserSchema = z.object({
-  userId: z.string(),
-  name: z.string(),
-  email: z.email(),
-});
+import { userRouter } from './routes/user';
 
 const leaks: Buffer[] = [];
-
-function simulateDbLatency(): Promise<void> {
-  // 10% chance of an outlier (500–2000ms), otherwise 50–250ms
-  const isOutlier = Math.random() < 0.1;
-
-  const delay = isOutlier
-    ? 500 + Math.random() * 1500
-    : 50 + Math.random() * 200;
-
-  return new Promise((resolve) => setTimeout(resolve, delay));
-}
 
 export function createServer() {
   const app = express();
@@ -39,7 +24,7 @@ export function createServer() {
       includePath: true,
       includeStatusCode: true,
       normalizePath: (req) => req.route?.path ?? 'unknown',
-      buckets: [0.005, 0.01, 0.05, 0.1, 0.5, 1, 5, 10, 15],
+      buckets: [0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10],
     }),
   );
 
@@ -64,13 +49,7 @@ export function createServer() {
 
   app.use(httpLogger);
 
-  app.post('/user', async (req, res) => {
-    const body = createUserSchema.parse(req.body);
-
-    await simulateDbLatency();
-
-    res.json(body);
-  });
+  app.use(userRouter);
 
   app.get('/favicon.ico', (req, res) => {
     return res.status(204).send();

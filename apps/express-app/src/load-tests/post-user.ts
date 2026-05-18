@@ -8,24 +8,37 @@ const errorRate = new Rate('errors');
 const responseTime = new Trend('response_time', true);
 
 const BASE_URL = 'https://turbo-express.marc-lab.dev';
+// const BASE_URL = 'http://localhost:8080';
 
 export const options: Options = {
   stages: [
-    // { duration: '30s', target: 10 }, // ramp up
-    // { duration: '1m', target: 10 }, // steady state
+    { duration: '30s', target: 10 }, // ramp up
+    { duration: '1m', target: 10 }, // steady state
     { duration: '30s', target: 50 }, // spike
-    // { duration: '1m', target: 50 }, // hold spike
+    { duration: '1m', target: 50 }, // hold spike
     { duration: '30s', target: 0 }, // ramp down
   ],
   thresholds: {
     http_req_duration: ['p(95)<30', 'p(99)<30'],
     http_req_failed: ['rate<0.01'],
-    // errors: ['rate<0.0001'],
+    errors: ['rate<0.0001'],
   },
 };
 
 export default function (): void {
-  const res: RefinedResponse<ResponseType> = http.get(`${BASE_URL}/_health`);
+  const res: RefinedResponse<ResponseType> = http.post(
+    `${BASE_URL}/user`,
+    JSON.stringify({
+      userId: '1',
+      name: 'John Doe',
+      email: 'john@doe.com',
+    }),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
 
   responseTime.add(res.timings.duration);
 
@@ -34,5 +47,5 @@ export default function (): void {
   });
   errorRate.add(!ok);
 
-  sleep(0.1);
+  sleep(1);
 }
