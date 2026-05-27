@@ -1,6 +1,8 @@
 import pino from 'pino';
 import pinoHttp from 'pino-http';
 
+import { getStore } from '@app/context';
+
 import * as config from './config';
 
 export const logger = pino({
@@ -13,6 +15,13 @@ export const logger = pino({
       },
     },
   }),
+  mixin: () => {
+    const store = getStore();
+
+    return {
+      requestId: store?.requestId,
+    };
+  },
 });
 
 export const httpLogger = pinoHttp({

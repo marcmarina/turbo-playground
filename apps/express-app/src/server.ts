@@ -5,7 +5,7 @@ import http from 'http';
 import os from 'os';
 import { ZodError } from 'zod';
 
-import { getStore, httpContextWrapper } from '@app/context';
+import { httpContextWrapper, updateStore } from '@app/context';
 import { httpLogger, logger } from '@app/logger';
 
 import { userRouter } from './routes/user';
@@ -40,9 +40,9 @@ export function createServer() {
     req.headers['x-request-id'] = requestId;
     res.set('x-request-id', requestId);
 
-    const store = getStore();
-
-    store?.set('requestId', requestId);
+    updateStore({
+      requestId,
+    });
 
     next();
   });

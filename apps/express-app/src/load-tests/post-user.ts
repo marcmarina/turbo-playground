@@ -8,14 +8,14 @@ const errorRate = new Rate('errors');
 const responseTime = new Trend('response_time', true);
 
 const BASE_URL = 'https://turbo-express.marc-lab.dev';
-// const BASE_URL = 'http://localhost:8080';
+// const BASE_URL =   'http://localhost:8080';
 
 export const options: Options = {
   stages: [
-    { duration: '30s', target: 10 }, // ramp up
-    { duration: '1m', target: 10 }, // steady state
-    { duration: '30s', target: 50 }, // spike
-    { duration: '1m', target: 50 }, // hold spike
+    { duration: '30s', target: 100 }, // ramp up
+    { duration: '1m', target: 100 }, // steady state
+    { duration: '30s', target: 500 }, // spike
+    { duration: '1m', target: 500 }, // hold spike
     { duration: '30s', target: 0 }, // ramp down
   ],
   thresholds: {
@@ -24,6 +24,8 @@ export const options: Options = {
     errors: ['rate<0.0001'],
   },
 };
+
+const statuses = new Set<number>();
 
 export default function (): void {
   const res: RefinedResponse<ResponseType> = http.post(
@@ -43,9 +45,15 @@ export default function (): void {
   responseTime.add(res.timings.duration);
 
   const ok = check(res, {
-    'status is 200': (r) => r.status === 200,
+    'status is 200': (r) => {
+      statuses.add(r.status);
+
+      return r.status === 200;
+    },
   });
   errorRate.add(!ok);
+
+  console.log(Array.from(statuses.values()));
 
   sleep(1);
 }

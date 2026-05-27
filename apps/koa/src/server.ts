@@ -2,7 +2,7 @@ import http from 'http';
 import Koa from 'koa';
 import Router from 'koa-router';
 
-import { getStore, httpContextWrapper } from '@app/context';
+import { httpContextWrapper, updateStore } from '@app/context';
 import { httpLogger } from '@app/logger';
 
 export function createServer() {
@@ -26,9 +26,9 @@ export function createServer() {
 
     ctx.set('x-request-id', requestId);
 
-    const store = getStore();
-
-    store?.set('requestId', requestId);
+    updateStore({
+      requestId,
+    });
 
     await next();
   });
