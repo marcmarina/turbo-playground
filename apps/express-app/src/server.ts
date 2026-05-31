@@ -8,9 +8,8 @@ import { ZodError } from 'zod';
 import { httpContextWrapper, updateStore } from '@app/context';
 import { httpLogger, logger } from '@app/logger';
 
+import { resourcesRouter } from './routes/resources';
 import { userRouter } from './routes/user';
-
-const leaks: Buffer[] = [];
 
 export function createServer() {
   const app = express();
@@ -54,6 +53,7 @@ export function createServer() {
   app.use(httpLogger);
 
   app.use(userRouter);
+  app.use(resourcesRouter);
 
   app.get('/favicon.ico', (req, res) => {
     return res.status(204).send();
@@ -61,32 +61,6 @@ export function createServer() {
 
   app.get('/_health', (req, res, _next) => {
     res.send(`OK`);
-  });
-
-  app.get('/stress/memory', (req, res) => {
-    const mb = parseInt(req.query.mb as string) || 100;
-    for (let i = 0; i < mb; i++) {
-      leaks.push(Buffer.alloc(1024 * 1024, 1)); // fill with 1s, prevents lazy allocation
-    }
-    res.json({
-      requested: `${mb}MB`,
-      heapUsed: `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(1)}MB`,
-      rss: `${(process.memoryUsage().rss / 1024 / 1024).toFixed(1)}MB`,
-    });
-  });
-
-  app.get('/stress/memory/release', (req, res) => {
-    leaks.length = 0;
-    res.json({ released: true });
-  });
-
-  app.get('/stress/cpu', (req, res) => {
-    const durationMs = parseInt(req.query.duration as string) || 5000;
-    const end = Date.now() + durationMs;
-    while (Date.now() < end) {
-      Math.sqrt(Math.random());
-    }
-    res.json({ duration: `${durationMs}ms` });
   });
 
   app.get('/host', (req, res) => {
