@@ -10,13 +10,6 @@ spec:
     name: {{ .Chart.Name }}
   minReplicas: {{ .Values.deployment.minReplicas }}
   maxReplicas: {{ .Values.deployment.maxReplicas }}
-  behavior:
-    scaleUp:
-      stabilizationWindowSeconds: 0
-      policies:
-      - type: Percent
-        value: 100
-        periodSeconds: 15
   metrics:
   - type: Resource
     resource:
