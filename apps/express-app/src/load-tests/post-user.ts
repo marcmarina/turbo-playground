@@ -25,8 +25,6 @@ export const options: Options = {
   },
 };
 
-const statuses = new Set<number>();
-
 export default function (): void {
   const res: RefinedResponse<ResponseType> = http.post(
     `${BASE_URL}/user`,
@@ -46,14 +44,10 @@ export default function (): void {
 
   const ok = check(res, {
     'status is 200': (r) => {
-      statuses.add(r.status);
-
       return r.status === 200;
     },
   });
   errorRate.add(!ok);
-
-  console.log(Array.from(statuses.values()));
 
   sleep(1);
 }
