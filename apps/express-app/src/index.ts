@@ -23,26 +23,32 @@ process.on('unhandledRejection', async (cause) => {
   process.exit(1);
 });
 
-const server = createServer();
+async function main() {
+  const server = createServer();
 
-server.listen(config.port, () => {
-  logger.info(`Server listening on port ${config.port}`);
-});
-
-const terminator = createHttpTerminator({
-  server: server,
-  gracefulTerminationTimeout: 30000,
-});
-
-const signals: NodeJS.Signals[] = ['SIGTERM', 'SIGINT'];
-
-signals.forEach((signal) => {
-  process.on(signal, async (signal) => {
-    logger.info(`Received ${signal}. Shutting down server.`);
-
-    await terminator.terminate();
-
-    logger.info('Server terminated. Exiting process.');
-    process.exit(0);
+  await new Promise<void>((res) => {
+    server.listen(config.port, res);
   });
-});
+
+  logger.info(`Server listening on port ${config.port}`);
+
+  const terminator = createHttpTerminator({
+    server: server,
+    gracefulTerminationTimeout: 30000,
+  });
+
+  const signals: NodeJS.Signals[] = ['SIGTERM', 'SIGINT'];
+
+  signals.forEach((signal) => {
+    process.on(signal, async (signal) => {
+      logger.info(`Received ${signal}. Shutting down server.`);
+
+      await terminator.terminate();
+
+      logger.info('Server terminated. Exiting process.');
+      process.exit(0);
+    });
+  });
+}
+
+void main();
