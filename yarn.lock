@@ -58,6 +58,7 @@ __metadata:
   resolution: "@app/logger@workspace:packages/logger"
   dependencies:
     "@app/config": "npm:*"
+    "@app/context": "npm:*"
     "@app/eslint-config": "npm:*"
     "@app/jest-config": "npm:*"
     "@app/tsconfig": "npm:*"
