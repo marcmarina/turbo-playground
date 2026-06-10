@@ -4270,30 +4270,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express-app@workspace:apps/express-app":
-  version: 0.0.0-use.local
-  resolution: "express-app@workspace:apps/express-app"
-  dependencies:
-    "@app/config": "npm:*"
-    "@app/context": "npm:*"
-    "@app/eslint-config": "npm:*"
-    "@app/jest-config": "npm:*"
-    "@app/logger": "npm:*"
-    "@app/tsconfig": "npm:*"
-    "@types/cors": "npm:^2.8.19"
-    "@types/express": "npm:^5"
-    "@types/k6": "npm:^2.0.0"
-    "@types/ws": "npm:^8.18.1"
-    cors: "npm:^2.8.5"
-    dotenv: "npm:^16.4.5"
-    eslint: "npm:^9.0.0"
-    express: "npm:^5"
-    http-terminator: "npm:^3.2.0"
-    nodemon: "npm:^3.1.0"
-    zod: "npm:^4.4.3"
-  languageName: unknown
-  linkType: soft
-
 "express-prom-bundle@npm:^8.0.0":
   version: 8.0.0
   resolution: "express-prom-bundle@npm:8.0.0"
@@ -4381,6 +4357,30 @@ __metadata:
   checksum: 10c0/45e8c841ad188a41402ddcd1294901e861ee0819f632fb494f2ed344ef9c43315d294d443fb48d594e6586a3b779785120f43321417adaef8567316a55072949
   languageName: node
   linkType: hard
+
+"express@workspace:apps/express":
+  version: 0.0.0-use.local
+  resolution: "express@workspace:apps/express"
+  dependencies:
+    "@app/config": "npm:*"
+    "@app/context": "npm:*"
+    "@app/eslint-config": "npm:*"
+    "@app/jest-config": "npm:*"
+    "@app/logger": "npm:*"
+    "@app/tsconfig": "npm:*"
+    "@types/cors": "npm:^2.8.19"
+    "@types/express": "npm:^5"
+    "@types/k6": "npm:^2.0.0"
+    "@types/ws": "npm:^8.18.1"
+    cors: "npm:^2.8.5"
+    dotenv: "npm:^16.4.5"
+    eslint: "npm:^9.0.0"
+    express: "npm:^5"
+    http-terminator: "npm:^3.2.0"
+    nodemon: "npm:^3.1.0"
+    zod: "npm:^4.4.3"
+  languageName: unknown
+  linkType: soft
 
 "fast-copy@npm:^3.0.0":
   version: 3.0.2

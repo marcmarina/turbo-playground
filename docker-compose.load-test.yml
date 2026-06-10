@@ -1,11 +1,11 @@
 name: load-test
 
 services:
-  express-app:
+  express:
     build:
       context: .
       dockerfile: Dockerfile
-    command: node apps/express-app/dist/index.js
+    command: node apps/express
     ports:
       - "8080:8080"
     environment:
@@ -27,10 +27,10 @@ services:
     image: grafana/k6
     command: run /scripts/post-user.js
     volumes:
-      - ./apps/express-app/src/load-tests:/scripts
+      - ./apps/express/src/load-tests:/scripts
     environment:
       - BASE_URL=https://turbo-express.marc-lab.dev
-      # - BASE_URL=http://express-app:8080
+      # - BASE_URL=http://express:8080
     depends_on:
-      express-app:
+      express:
         condition: service_healthy
