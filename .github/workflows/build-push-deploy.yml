@@ -59,7 +59,7 @@ jobs:
 
       - name: Deploy Express Backend
         run: |
-          helm upgrade --install turbo-express ./apps/express-app/helm \
+          helm upgrade --install turbo-express ./apps/express/helm \
             --set image.tag=${{ github.sha }} \
             --atomic \
             --wait \
