@@ -31,6 +31,19 @@ export function createServer() {
     }),
   );
 
+  app.use(
+    promBundle({
+      excludeRoutes: ['/_health'],
+      normalizePath: (req) => req.route?.path ?? 'unknown',
+      buckets: [
+        0.001, 0.0025, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 30,
+        60,
+      ],
+      httpDurationMetricName: 'http_request_highr_duration_seconds',
+      includeUp: false,
+    }),
+  );
+
   app.use(express.json());
 
   app.use((req, res, next) => {
