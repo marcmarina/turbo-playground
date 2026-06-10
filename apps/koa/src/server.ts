@@ -3,7 +3,7 @@ import Koa from 'koa';
 import Router from 'koa-router';
 
 import { httpContextWrapper, updateStore } from '@app/context';
-import { httpLogger } from '@app/logger';
+import { httpLogger, logger } from '@app/logger';
 
 export function createServer() {
   const app = new Koa();
@@ -12,8 +12,9 @@ export function createServer() {
     try {
       await next();
     } catch (err) {
+      logger.error(err, 'Internal server error');
+
       ctx.status = 500;
-      ctx.body = err.message;
     }
   });
 
@@ -42,6 +43,10 @@ export function createServer() {
   const router = new Router();
 
   app.use(router.routes());
+
+  router.get('/error', async () => {
+    throw new Error('Test error');
+  });
 
   router.get('/_health', async (ctx) => {
     ctx.body = 'OK';
