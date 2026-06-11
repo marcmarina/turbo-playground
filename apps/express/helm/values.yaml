@@ -1,7 +1,7 @@
 namespace: default
 
 image:
-  repository: harbor.marcmarina.com/library/turbo-playground
+  repository: harbor.marc-lab.dev/library/turbo-playground
   tag: latest
   pullPolicy: IfNotPresent
 

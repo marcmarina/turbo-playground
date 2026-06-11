@@ -17,7 +17,7 @@ jobs:
       - name: Log in to Harbor
         uses: docker/login-action@v3
         with:
-          registry: harbor.marcmarina.com
+          registry: harbor.marc-lab.dev
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
@@ -27,7 +27,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: harbor.marcmarina.com/library/turbo-playground:${{ github.sha }}
+          tags: harbor.marc-lab.dev/library/turbo-playground:${{ github.sha }}
 
       - name: Build and push image
         uses: docker/build-push-action@v5
@@ -35,7 +35,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: harbor.marcmarina.com/library/turbo-playground:latest
+          tags: harbor.marc-lab.dev/library/turbo-playground:latest
 
   deploy-backend:
     name: Deploy Express Backend
