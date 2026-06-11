@@ -1,5 +1,5 @@
 import cors from 'cors';
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import promBundle from 'express-prom-bundle';
 import http from 'http';
 import os from 'os';
@@ -73,30 +73,26 @@ export function createServer() {
   });
 
   app.get('/_health', (req, res, _next) => {
-    res.send(`OK`);
+    res.sendStatus(200);
   });
 
   app.get('/host', (req, res) => {
     res.send(os.hostname());
   });
 
-  app.post('/exit', (req) => {
-    process.exit(req.body.code);
-  });
-
   app.use((req, res) => {
     res.status(404).send(`Cannot ${req.method} ${req.url}`);
   });
 
-  app.use((error, req, res, _next) => {
-    logger.error(error, 'Request error');
+  app.use((error: unknown, req: Request, res: Response, _: NextFunction) => {
+    logger.error(error, 'Internal server error');
 
     if (error instanceof ZodError) {
       res.status(400).json({ errors: error.issues });
       return;
     }
 
-    res.status(500).send(error.message);
+    res.status(500).send('Internal server error');
   });
 
   return http.createServer(app);
