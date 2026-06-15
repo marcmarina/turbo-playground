@@ -10,7 +10,6 @@ container:
   port: 8080
 
 deployment:
-  replicaCount: 1
   minReplicas: 1
   maxReplicas: 1
   targetCPUUtilizationPercentage: 80
@@ -45,5 +44,4 @@ env:
  LOG_LEVEL: info
  LOG_FORMAT: json
  ENABLE_REQUEST_LOGGING: false
- PORT: 8080
  API_HOST: http://turbo
