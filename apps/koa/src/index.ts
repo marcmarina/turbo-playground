@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import { createHttpTerminator } from 'http-terminator';
 import path from 'path';
 
 const envFilePath = path.join(__dirname, '../.env');
@@ -24,12 +25,17 @@ server.listen(config.port, () => {
   logger.info(`Server listening on port ${config.port}`);
 });
 
-const shutdownHandler = (signal: any) => {
+const terminator = createHttpTerminator({
+  server,
+  gracefulTerminationTimeout: 30000,
+});
+
+const shutdownHandler = async (signal: NodeJS.Signals) => {
   logger.info(`${signal} received. Closing server.`);
 
-  server.close(() => {
-    process.exit(0);
-  });
+  await terminator.terminate();
+
+  process.exit(0);
 };
 
 process.on('SIGTERM', shutdownHandler);
