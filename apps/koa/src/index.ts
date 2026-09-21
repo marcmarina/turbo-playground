@@ -35,6 +35,7 @@ const shutdownHandler = async (signal: NodeJS.Signals) => {
 
   await terminator.terminate();
 
+  logger.info('Server terminated. Exiting process.');
   process.exit(0);
 };
 
