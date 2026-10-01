@@ -1,0 +1,15 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: turbo-react
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./apps/front-end/helm
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  images:
+    - name: harbor.marc-lab.dev/library/turbo-playground
+      newTag: e121cf01906e9a2ffd89769b0564669dbc5802c5 # {"$imagepolicy": "flux-system:turbo-playground:tag"}

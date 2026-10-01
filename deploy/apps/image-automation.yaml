@@ -1,0 +1,56 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: turbo-playground
+  namespace: flux-system
+spec:
+  image: harbor.marc-lab.dev/library/turbo-playground
+  interval: 5m
+  secretRef:
+    name: harbor-creds
+---
+# CI tags images as <run_number>-<sha>; pick the highest run number.
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: turbo-playground
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: turbo-playground
+  filterTags:
+    pattern: '^(?P<run>\d+)-[a-f0-9]{40}$'
+    extract: '$run'
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageUpdateAutomation
+metadata:
+  name: turbo-playground
+  namespace: flux-system
+spec:
+  interval: 5m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  git:
+    checkout:
+      ref:
+        branch: master
+    commit:
+      author:
+        name: fluxcdbot
+        email: fluxcdbot@users.noreply.github.com
+      messageTemplate: |
+        Deploy turbo-playground [skip ci]
+
+        {{ range .Changed.Changes -}}
+        - {{ .OldValue }} -> {{ .NewValue }}
+        {{ end -}}
+    push:
+      branch: master
+  update:
+    path: ./deploy
+    strategy: Setters

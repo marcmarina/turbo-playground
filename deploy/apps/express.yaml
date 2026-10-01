@@ -1,0 +1,28 @@
+# Same name and namespace as the release CI used to install, so Flux adopts it.
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: turbo-express
+  namespace: default
+spec:
+  interval: 10m
+  timeout: 2m
+  chart:
+    spec:
+      chart: ./apps/express/helm
+      # Chart.yaml version never changes, so reconcile on every Git revision.
+      reconcileStrategy: Revision
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+      remediateLastFailure: true
+  values:
+    image:
+      tag: e121cf01906e9a2ffd89769b0564669dbc5802c5 # {"$imagepolicy": "flux-system:turbo-playground:tag"}
