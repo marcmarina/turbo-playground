@@ -37,30 +37,29 @@ jobs:
           push: true
           tags: harbor.marc-lab.dev/library/turbo-playground:latest
 
-  deploy-backend:
-    name: Deploy Express Backend
+  update-image-tag:
+    name: Update Express Image Tag
     needs: build-and-push
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: update-image-tag
+      cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Connect to Tailscale
-        uses: tailscale/github-action@v2
+      - uses: actions/checkout@v5
         with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:ci
+          ref: ${{ github.ref_name }}
 
-      - name: Configure kubectl
-        run: |
-          mkdir -p ~/.kube
-          echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
-          kubectl config set-cluster default --server=https://k3s-server:6443
+      - name: Set image tag
+        run: yq -i '.image.tag = "${{ github.sha }}"' apps/express/helm/values-image.yaml
 
-      - name: Deploy Express Backend
+      - name: Commit and push
         run: |
-          helm upgrade --install turbo-express ./apps/express/helm \
-            --set image.tag=${{ github.sha }} \
-            --atomic \
-            --wait \
-            --timeout 1m
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/express/helm/values-image.yaml
+          git diff --cached --quiet && exit 0
+          git commit -m "Deploy turbo-express ${GITHUB_SHA::7}"
+          git pull --rebase origin ${{ github.ref_name }}
+          git push origin HEAD:${{ github.ref_name }}
