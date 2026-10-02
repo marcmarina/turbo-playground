@@ -19,8 +19,7 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: default
-  # Enable once the first diff/sync looks clean:
-  # syncPolicy:
-  #   automated:
-  #     prune: true
-  #     selfHeal: true
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
