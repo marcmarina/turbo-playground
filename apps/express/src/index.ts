@@ -45,7 +45,7 @@ async function main() {
 
       await terminator.terminate();
 
-      logger.info('Server terminated. Exiting process.');
+      logger.info('Server terminated. Exiting process now.');
       process.exit(0);
     });
   });
