@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-Yarn 4 workspaces + Turborepo, Node 20.19.6 (`.node-version`).
+Yarn 4 workspaces + Turborepo, Node 24.22.0 (`.node-version`).
 
 ```sh
 yarn build                         # turbo run build (tsc / vite) across all workspaces
