@@ -27,7 +27,7 @@ Git hooks (husky): pre-commit runs lint-staged (eslint --fix + prettier on `*.ts
 
 ## Architecture
 
-- `apps/express` — the only deployed service (Express 5). `apps/koa` is a parallel Koa implementation of the same server skeleton; `apps/front-end` is a standalone Vite + React app that doesn't use the shared packages.
+- `apps/express` — the main service (Express 5). `apps/koa` is a parallel Koa implementation of the same server skeleton (health/error routes only, no metrics); both are deployed. `apps/front-end` is a standalone Vite + React app that doesn't use the shared packages.
 - `packages/*` are internal libraries named `@app/*`:
   - `@app/config` — typed env var readers (`string`, `integer`, `boolean`, `oneOf`) that throw on missing/invalid values.
   - `@app/context` — `AsyncLocalStorage` request context holding `requestId`.
@@ -43,7 +43,7 @@ ESLint enforces `simple-import-sort` with groups: side-effect → `node:` → pa
 ## Build & deployment
 
 - The `Dockerfile` builds the whole monorepo and expects a `deps/` folder (gitignored) containing only the root yarn files and every workspace's `package.json`, for layer caching. Run `./copy-build-deps.sh` before `docker build`.
-- The image is shared; the Helm chart picks the app via `container.command` (`node apps/express`).
-- `apps/express/helm/` is the Helm chart (Deployment, Service, HPA, Traefik Ingress at `turbo-express.marc-lab.dev`, Prometheus `ServiceMonitor`). The image tag lives in `values-image.yaml`, separate from `values.yaml`, so CI can bump it alone.
-- `.github/workflows/build-push-deploy.yml`: on push to `master`, builds and pushes to Harbor (`harbor.marc-lab.dev/library/turbo-playground`, tagged with SHA and `latest`), then commits the SHA into `values-image.yaml` as `github-actions[bot]`. ArgoCD (Application managed in the ArgoCD UI, not in this repo) auto-syncs that chart from `master`. Expect "Deploy turbo-express <sha>" commits on `master`; pull before pushing.
+- The image is shared; each Helm chart picks the app via `container.command` (`node apps/express`, `node apps/koa`).
+- `apps/express/helm/` is the Helm chart (Deployment, Service, HPA, Traefik Ingress at `turbo-express.marc-lab.dev`, Prometheus `ServiceMonitor`). `apps/koa/helm/` is a copy of it for `turbo-koa` (`turbo-koa.marc-lab.dev`), minus the `ServiceMonitor` since Koa exposes no `/metrics`. The image tag lives in each chart's `values-image.yaml`, separate from `values.yaml`, so CI can bump it alone.
+- `.github/workflows/build-push-deploy.yml`: on push to `master`, builds and pushes to Harbor (`harbor.marc-lab.dev/library/turbo-playground`, tagged with SHA and `latest`), then commits the SHA into both charts' `values-image.yaml` as `github-actions[bot]`. ArgoCD auto-syncs the charts from `master`; the `turbo-express` and `turbo-koa` Applications live in the `k3s-cluster` repo (`apps/<name>/application.yaml`), not here. Expect "Deploy turbo-express and turbo-koa <sha>" commits on `master`; pull before pushing.
 - `.github/workflows/test.yml` runs `yarn test` on pushes and PRs to `master`.
