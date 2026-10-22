@@ -1,6 +1,6 @@
+import Router from '@koa/router';
 import http from 'http';
 import Koa from 'koa';
-import Router from 'koa-router';
 
 import { httpContextWrapper, updateStore } from '@app/context';
 import { httpLogger, logger } from '@app/logger';
